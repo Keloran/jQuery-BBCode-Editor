@@ -18,8 +18,6 @@ if (jQuery) {
 				$bbCodeID	= "#" + $(this).attr("id") + "bbCode";
 				if (!$($bbCodeID).attr("id")) { $main.makeContainer($(this).attr("id")); }
 
-				console.log("fuck");
-
 				$mainID		= $(this).attr("id");
 				$mainObj	= document.getElementById($mainID);
 				$bbCode		= $($bbCodeID);
@@ -62,7 +60,7 @@ if (jQuery) {
 			},
 
 			makeButtons: function(mainID, $main) {
-				$mainID = $("#" + $mainID);
+				$mainID = $("#" + mainID);
 
 				//bold
 				$bbCode.append("<span class=\"bbCodeButton sprite_text_bold\" id=\"bold" + $mainID + "\">Bold</span>");
