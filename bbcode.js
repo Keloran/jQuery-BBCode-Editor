@@ -4,13 +4,13 @@ if (jQuery) {
 	//	alert("jQuery UI needed for the BBCode editor to work");
 	//}
 
-	(function($) {
+	(function ($) {
 		$.fn.extend({
-			bbCode: function(options) {
-				var main, $bbCode, $html, $bbCodeID, $mainID, $ret, $item, $listNum, $listItems, $bbCounter;
-				var $backOptions = options;
+			bbCode: function (options) {
+				var main, $bbCode, $html, $bbCodeID, $mainID, $ret, $item, $listNum, $listItems, $bbCounter, $backOptions, $mainObj, $main, settings;
+				$backOptions = options;
 
-				var settings = $.extend({
+				settings = $.extend({
 					"counter":	false,
 					"preview":	false
 				}, options);
@@ -23,7 +23,7 @@ if (jQuery) {
 				$mainObj	= document.getElementById($mainID);
 				$bbCode		= $($bbCodeID);
 
-				$main.makeButtons($mainID, $main, $bbCode);
+				$main.makeButtons($mainID, $main, $bbCode, settings);
 
 				//Counter for things like twitter
 				if (settings.counter) {
@@ -42,10 +42,11 @@ if (jQuery) {
 				if (settings.preview) { $main.makePreview($mainID); }
 
 				//updater depending on preview or not
-				$("#"+ $mainID).keyup(function() { $main.triggerChange($main, $mainID, settings.preview); });
+				$("#" + $mainID).keyup(function () { $main.triggerChange($main, $mainID, settings.preview); });
 			},
 
-			makeContainer: function(mainID, $backOptions) {
+			makeContainer: function (mainID, $backOptions) {
+				var $textArea, $label, $title, $place, $container;
 				$textArea	= $("#" + mainID);
 				$label		= $("#label" + mainID);
 
@@ -62,86 +63,87 @@ if (jQuery) {
 				$("#" + mainID).bbCode($backOptions);
 			},
 
-			makeButtons: function(mainID, $main, $bbCode) {
+			makeButtons: function (mainID, $main, $bbCode, settings) {
+				var $mainID, $ret;
 				$mainID = $("#" + mainID);
 
 				//bold
 				$bbCode.append("<span class=\"bbCodeButton sprite_text_bold\" id=\"bold" + $mainID + "\">Bold</span>");
-				$("#bold" + $mainID).button({text: false, icons: {primary: "boldBB"}}).click(function() {
+				$("#bold" + $mainID).button({text: false, icons: {primary: "boldBB"}}).click(function () {
 					$main.doTag("b", "b", $mainID);
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
-				$(".bbCodeButton").each(function(i) { $(this).not(".ui-button").unbind().remove(); });
+				$(".bbCodeButton").each(function (i) { $(this).not(".ui-button").unbind().remove(); });
 
 				//italic
 				$bbCode.append("<span class=\"bbCodeButton sprite_text_italic\" id=\"italic" + $mainID + "\">Italic</span>");
-				$("#italic" + $mainID).button({text: false, icons: {primary: "italicBB"}}).click(function() {
+				$("#italic" + $mainID).button({text: false, icons: {primary: "italicBB"}}).click(function () {
 					$main.doTag("i", "i", $mainID);
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
-				$(".bbCodeButton").each(function(i) { $(this).not(".ui-button").unbind().remove(); });
+				$(".bbCodeButton").each(function (i) { $(this).not(".ui-button").unbind().remove(); });
 
 				//underline
 				$bbCode.append("<span class=\"bbCodeButton sprite_text_underline\" id=\"underline" + $mainID + "\">Underline</span>");
-				$("#underline" + $mainID).button({text: false, icons: {primary: "underlineBB"}}).click(function() {
+				$("#underline" + $mainID).button({text: false, icons: {primary: "underlineBB"}}).click(function () {
 					$main.doTag("u", "u", $mainID);
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
-				$(".bbCodeButton").each(function(i) { $(this).not(".ui-button").unbind().remove(); });
+				$(".bbCodeButton").each(function (i) { $(this).not(".ui-button").unbind().remove(); });
 
 				$bbCode.append("<span class=\"bbCodeButton sprite_style\" id=\"colorBB" + $mainID + "\">Color</span>");
-				$("#colorBB" + $mainID).button({text: false, icons: {primary: "colorBB"}}).click(function() {
+				$("#colorBB" + $mainID).button({text: false, icons: {primary: "colorBB"}}).click(function () {
 					$ret = prompt("Enter Color: ", "CECECE");
 					if ($ret) { $main.doTag("color=#" + $ret, "color", $mainID); }
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
-				$(".bbCodeButton").each(function(i) { $(this).not(".ui-button").unbind().remove(); });
+				$(".bbCodeButton").each(function (i) { $(this).not(".ui-button").unbind().remove(); });
 
 				//link
 				$bbCode.append("<span class=\"bbCodeButton sprite_link\" id=\"linkBB" + $mainID + "\">Link</span>");
-				$("#linkBB" + $mainID).button({text: false, icons: {primary: "linkBB"}}).click(function() {
+				$("#linkBB" + $mainID).button({text: false, icons: {primary: "linkBB"}}).click(function () {
 					$ret = prompt("Enter URL:", "http://www.tester.com");
 					if ($ret) { $main.doTag("url=" + $ret, "url", $mainID); }
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
-				$(".bbCodeButton").each(function(i) { $(this).not(".ui-button").unbind().remove(); });
+				$(".bbCodeButton").each(function (i) { $(this).not(".ui-button").unbind().remove(); });
 
 				//image
 				$bbCode.append("<span class=\"bbCodeButton sprite_picture\" id=\"imageBB" + $mainID + "\">Image</span>");
-				$("#imageBB" + $mainID).button({text: false, icons: {primary: "imageBB"}}).click(function() {
+				$("#imageBB" + $mainID).button({text: false, icons: {primary: "imageBB"}}).click(function () {
 					$ret = prompt("Enter Image URL:", "http://images.google.com");
 					if ($ret) {	$main.doTag("img=" + $ret, "img", $mainID); }
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
-				$(".bbCodeButton").each(function(i) { $(this).not(".ui-button").unbind().remove(); });
+				$(".bbCodeButton").each(function (i) { $(this).not(".ui-button").unbind().remove(); });
 
 				//youtube
 				$bbCode.append("<span class=\"bbCodeButton sprite_video\" id=\"videoBB" + $mainID + "\">Youtube</span>");
-				$("#videoBB" + $mainID).button({text: false, icons: {primary: "videoBB"}}).click(function() {
+				$("#videoBB" + $mainID).button({text: false, icons: {primary: "videoBB"}}).click(function () {
 					$ret = prompt("Enter youtube ID:", "PkypXn5S4Rg");
 					$main.doMiddle("youtube", $ret, $mainID);
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
-				$(".bbCodeButton").each(function(i) { $(this).not(".ui-button").unbind().remove(); });
+				$(".bbCodeButton").each(function (i) { $(this).not(".ui-button").unbind().remove(); });
 
 				//List
 				$bbCode.append("<span class=\"bbCodeButton sprite_text_list_bullets\" id=\"listBB" + $mainID + "\">List</span>");
-				$("#listBB" + $mainID).button({text: false, icons: {primary: "listBB"}}).click(function() {
+				$("#listBB" + $mainID).button({text: false, icons: {primary: "listBB"}}).click(function () {
 					$main.doList($mainID);
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
-				$(".bbCodeButton").each(function(i) { $(this).not(".ui-button").unbind().remove(); });
+				$(".bbCodeButton").each(function (i) { $(this).not(".ui-button").unbind().remove(); });
 
 				//break
 				$bbCode.append("<br />");
 
 				//hr
 				$bbCode.append("<span class=\"bbCodeButton sprite_text_horizontalrule\" id=\"hrBB" + $mainID + "\">HR</span>");
-				$("#hrBB" + $mainID).button({text: false, icons: {primary: "hrBB"}}).click(function() {
+				$("#hrBB" + $mainID).button({text: false, icons: {primary: "hrBB"}}).click(function () {
 					$main.doTag("hr", "hr", $mainID);
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
-				$(".bbCodeButton").each(function(i) { $(this).not(".ui-button").unbind().remove(); });
+				$(".bbCodeButton").each(function (i) { $(this).not(".ui-button").unbind().remove(); });
 
 				//headings
 				$bbCode.append("<span class=\"bbCodeButton sprite_text_heading_1\" id=\"h1BB" + $mainID + "\">H1</span>");
@@ -151,40 +153,41 @@ if (jQuery) {
 				$bbCode.append("<span class=\"bbCodeButton sprite_text_heading_5\" id=\"h5BB" + $mainID + "\">H5</span>");
 				$bbCode.append("<span class=\"bbCodeButton sprite_text_heading_6\" id=\"h6BB" + $mainID + "\">H6</span>");
 
-				$("#h1BB" + $mainID).button({text: false, icons: {primary: "h1BB"}}).click(function() {
+				$("#h1BB" + $mainID).button({text: false, icons: {primary: "h1BB"}}).click(function () {
 					$main.doTag("h1", "h1", $mainID);
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
-				$("#h2BB" + $mainID).button({text: false, icons: {primary: "h2BB"}}).click(function() {
+				$("#h2BB" + $mainID).button({text: false, icons: {primary: "h2BB"}}).click(function () {
 					$main.doTag("h2", "h2", $mainID);
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
-				$("#h3BB" + $mainID).button({text: false, icons: {primary: "h3BB"}}).click(function() {
+				$("#h3BB" + $mainID).button({text: false, icons: {primary: "h3BB"}}).click(function () {
 					$main.doTag("h3", "h3", $mainID);
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
-				$("#h4BB" + $mainID).button({text: false, icons: {primary: "h4BB"}}).click(function() {
+				$("#h4BB" + $mainID).button({text: false, icons: {primary: "h4BB"}}).click(function () {
 					$main.doTag("h4", "h4", $mainID);
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
-				$("#h5BB" + $mainID).button({text: false, icons: {primary: "h5BB"}}).click(function() {
+				$("#h5BB" + $mainID).button({text: false, icons: {primary: "h5BB"}}).click(function () {
 					$main.doTag("h5", "h5", $mainID);
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
-				$("#h6BB" + $mainID).button({text: false, icons: {primary: "h6BB"}}).click(function() {
+				$("#h6BB" + $mainID).button({text: false, icons: {primary: "h6BB"}}).click(function () {
 					$main.doTag("h6", "h6", $mainID);
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
-				$(".bbCodeButton").each(function(i) { $(this).not(".ui-button").unbind().remove(); });
+				$(".bbCodeButton").each(function (i) { $(this).not(".ui-button").unbind().remove(); });
 			},
 
-			triggerChange: function($main, mainID, preview) {
+			triggerChange: function ($main, mainID, preview) {
 				$main.fixReplication(mainID);
 
 				if (preview) { $main.updatePreview(mainID); }
 			},
 
-			fixReplication: function(mainID) {
+			fixReplication: function (mainID) {
+				var $fixVal, $content;
 				$content	= $("#" + mainID);
 
 				//get content before fix
@@ -199,62 +202,66 @@ if (jQuery) {
 				}
 			},
 
-			previewBold: function(mainArea, $preVal) {
-				$splitter 		= $preVal.split(/(.*)\[b\](.*)\[\/b\](.*)/g);
+			previewBold: function (mainArea, $preVal) {
+				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach;
+				$splitter		= $preVal.split(/(.*)\[b\](.*)\[\/b\](.*)/g);
 				$preContent		= $splitter[1];
-            	$preElement 	= $splitter[2];
+				$preElement		= $splitter[2];
+				$postContent	= $splitter[3];
+
+				preRender		= document.createElement("div");
+    			preRender.id	= "preRender";
+
+    			preAttach		= document.getElementById(mainArea);
+    			preAttach.appendChild(preRender);
+
+   				$("#preRender").html($preContent + "<strong>" + $preElement + "</strong>" + $postContent);
+   				$ret			= $("#preRender").html();
+   				$("#preRender").remove();
+   				return $ret;
+			},
+
+			previewItalic: function (mainArea, $preVal) {
+				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach;
+				$splitter		= $preVal.split(/(.*)\[i\](.*)\[\/i\](.*)/g);
+				$preContent		= $splitter[1];
+            	$preElement		= $splitter[2];
             	$postContent	= $splitter[3];
 
 				preRender		= document.createElement("div");
     			preRender.id	= "preRender";
 
-    			preAttach 		= document.getElementById(mainArea);
+    			preAttach		= document.getElementById(mainArea);
     			preAttach.appendChild(preRender);
 
-   				$("#preRender").html($preContent + "<strong>" + $content + "</strong>" + $postContent);
-   				$ret = $("#preRender").html();
+   				$("#preRender").html($preContent + "<em>" + $preElement + "</em>" + $postContent);
+   				$ret			= $("#preRender").html();
    				$("#preRender").remove();
    				return $ret;
 			},
 
-			previewItalic: function(mainArea, $preVal) {
-				$splitter 		= $preVal.split(/(.*)\[i\](.*)\[\/i\](.*)/g);
-				$preContent 	= $splitter[1];
-            	$preElement 	= $splitter[2];
-            	$postContent 	= $splitter[3];
+			previewUnderline: function (mainArea, $preVal) {
+				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach;
+				$splitter		= $preVal.split(/(.*)\[u\](.*)\[\/u\](.*)/g);
+				$preContent		= $splitter[1];
+            	$preElement		= $splitter[2];
+            	$postContent	= $splitter[3];
 
 				preRender		= document.createElement("div");
     			preRender.id	= "preRender";
 
-    			preAttach 		= document.getElementById(mainArea);
+    			preAttach		= document.getElementById(mainArea);
     			preAttach.appendChild(preRender);
 
-   				$("#preRender").html($preContent + "<em>" + $content + "</em>" + $postContent);
-   				$ret = $("#preRender").html();
+   				$("#preRender").html($preContent + "<span style=\"border-bottom: 1px dotted\">" + $preElement + "</span>" + $postContent);
+   				$ret			= $("#preRender").html();
    				$("#preRender").remove();
    				return $ret;
 			},
 
-			previewUnderline: function(mainArea, $preVal) {
-				$splitter 		= $preVal.split(/(.*)\[u\](.*)\[\/u\](.*)/g);
-				$preContent 	= $splitter[1];
-            	$preElement 	= $splitter[2];
-            	$postContent 	= $splitter[3];
-
-				preRender		= document.createElement("div");
-    			preRender.id	= "preRender";
-
-    			preAttach 		= document.getElementById(mainArea);
-    			preAttach.appendChild(preRender);
-
-   				$("#preRender").html($preContent + "<span style=\"border-bottom: 1px dotted\">" + $content + "</span>" + $postContent);
-   				$ret = $("#preRender").html();
-   				$("#preRender").remove();
-   				return $ret;
-			},
-
-			previewHeader: function(mainArea, $preVal) {
-				$splitter 		= $preVal.split(/(.*)\[h([0-9]+)\](.*)\[\/h([0-9]+)\](.*)/g);
+			previewHeader: function (mainArea, $preVal) {
+				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach;
+				$splitter		= $preVal.split(/(.*)\[h([0-9]+)\](.*)\[\/h([0-9]+)\](.*)/g);
 				$preContent		= $splitter[1];
 				$hLevel			= $splitter[2];
 				$preElement		= $splitter[3];
@@ -263,16 +270,16 @@ if (jQuery) {
 				preRender		= document.createElement("div");
     			preRender.id	= "preRender";
 
-    			preAttach 		= document.getElementById(mainArea);
+    			preAttach		= document.getElementById(mainArea);
     			preAttach.appendChild(preRender);
 
-   				$("#preRender").html($preContent + "<h" + $hLevel + ">" + $content + "</h" + $hLevel +">" + $postContent);
-   				$ret = $("#preRender").html();
+   				$("#preRender").html($preContent + "<h" + $hLevel + ">" + $preElement + "</h" + $hLevel +">" + $postContent);
+   				$ret			= $("#preRender").html();
    				$("#preRender").remove();
    				return $ret;
 			},
 
-			updatePreview: function(mainID) {
+			updatePreview: function (mainID) {
 				$content 		= $("#" + mainID);
 				$preVal			= $content.val();
 				$preview		= $("#preview_" + mainID);
@@ -339,7 +346,7 @@ if (jQuery) {
 				}
 			},
 
-			makePreview: function(mainID) {
+			makePreview: function (mainID) {
 				$("#bbContainer_" + mainID).append("<div id=\"preview_" + mainID + "\"></div>");
 				$preview = $("#preview_" + mainID);
 				$preview.css({
@@ -351,7 +358,7 @@ if (jQuery) {
 				$("#" + mainID).css("width", "44%");
 			},
 
-			doTag: function(tag, tag2, mainID) {
+			doTag: function (tag, tag2, mainID) {
 				var $len, $sel, $start, $end, $rep, $tag1Len, $tag2Len, $currSend
 				var $tag1	= "[" + tag + "]";
 				var $tag2	= "[/" + tag2 + "]";
@@ -382,7 +389,7 @@ if (jQuery) {
 				}
 			},
 
-			doList: function(mainID) {
+			doList: function (mainID) {
 				var $mainLen;
 				$listItems	= new Array();
 				$listNum	= 0;
@@ -412,7 +419,7 @@ if (jQuery) {
 				}
 			},
 
-			doMiddle: function(tag, content, mainID) {
+			doMiddle: function (tag, content, mainID) {
 				if (content) {
 					$mainObj	= document.getElementById(mainID);
 
@@ -429,7 +436,7 @@ if (jQuery) {
 				}
 			},
 
-			doItems: function() {
+			doItems: function () {
 				var $item = null;
 				$item = prompt("List Item, [cancel to stop]");
 
