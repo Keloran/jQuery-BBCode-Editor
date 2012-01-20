@@ -200,9 +200,10 @@ if (jQuery) {
 			},
 
 			previewBold: function(mainArea, preContent, content, postContent) {
-				preRender = document.createElement("div");
-    			preRender.id = "preRender";
-    			preAttach = document.getElementById(mainArea);
+				preRender		= document.createElement("div");
+    			preRender.id	= "preRender";
+
+    			preAttach 		= document.getElementById(mainArea);
     			preAttach.appendChild(preRender);
 
    				$("#preRender").html(preContent + "<b>" + content + "</b>" + postContent);
@@ -233,7 +234,7 @@ if (jQuery) {
             			$preContent = $splitter[1];
             			$preElement = $splitter[2];
             			$postContent = $splitter[3];
-            			$preVal = $main.previewBold("stuff", $preContent, $preElement, $postContent);
+            			$preVal = $main.previewBold("preview_" + mainID, $preContent, $preElement, $postContent);
 					}
 
 					//list replacement
