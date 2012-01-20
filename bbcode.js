@@ -199,16 +199,70 @@ if (jQuery) {
 				}
 			},
 
-			previewBold: function(mainArea, preContent, content, postContent) {
+			previewBold: function(mainArea, $splitter) {
+				$preContent		= $splitter[1];
+            	$preElement 	= $splitter[2];
+            	$postContent	= $splitter[3];
+
 				preRender		= document.createElement("div");
     			preRender.id	= "preRender";
 
     			preAttach 		= document.getElementById(mainArea);
     			preAttach.appendChild(preRender);
 
-    			console.log(document.getElementById(mainArea).selectionStart);
+   				$("#preRender").html($preContent + "<strong>" + $content + "</strong>" + $postContent);
+   				$ret = $("#preRender").html();
+   				$("#preRender").remove();
+   				return $ret;
+			},
 
-   				$("#preRender").html(preContent + "<strong>" + content + "</strong>" + postContent);
+			previewItalic: function(mainArea, $splitter) {
+				$preContent 	= $splitter[1];
+            	$preElement 	= $splitter[2];
+            	$postContent 	= $splitter[3];
+
+				preRender		= document.createElement("div");
+    			preRender.id	= "preRender";
+
+    			preAttach 		= document.getElementById(mainArea);
+    			preAttach.appendChild(preRender);
+
+   				$("#preRender").html($preContent + "<em>" + $content + "</em>" + $postContent);
+   				$ret = $("#preRender").html();
+   				$("#preRender").remove();
+   				return $ret;
+			},
+
+			previewUnderline: function(mainArea, $splitter) {
+				$preContent 	= $splitter[1];
+            	$preElement 	= $splitter[2];
+            	$postContent 	= $splitter[3];
+
+				preRender		= document.createElement("div");
+    			preRender.id	= "preRender";
+
+    			preAttach 		= document.getElementById(mainArea);
+    			preAttach.appendChild(preRender);
+
+   				$("#preRender").html($preContent + "<span style=\"border-bottom: 1px dotted\">" + $content + "</span>" + $postContent);
+   				$ret = $("#preRender").html();
+   				$("#preRender").remove();
+   				return $ret;
+			},
+
+			previewHeader: function(mainArea, $splitter) {
+				$preContent		= $splitter[1];
+				$hLevel			= $splitter[2];
+				$preElement		= $splitter[3];
+				$postContent	= $splitter[4];
+
+				preRender		= document.createElement("div");
+    			preRender.id	= "preRender";
+
+    			preAttach 		= document.getElementById(mainArea);
+    			preAttach.appendChild(preRender);
+
+   				$("#preRender").html($preContent + "<h" + $hLevel + ">" + $content + "</h" + $hLevel +">" + $postContent);
    				$ret = $("#preRender").html();
    				$("#preRender").remove();
    				return $ret;
@@ -232,11 +286,8 @@ if (jQuery) {
 
 					//bold replace
 					if ($preVal.match(/\[b\](.*)\[\/b\]/g)) {
-            			$splitter = $preVal.split(/(.*)\[b\](.*)\[\/b\](.*)/g);
-            			$preContent = $splitter[1];
-            			$preElement = $splitter[2];
-            			$postContent = $splitter[3];
-            			$preVal = $main.previewBold("preview_" + mainID, $preContent, $preElement, $postContent);
+            			$splitter 		= $preVal.split(/(.*)\[b\](.*)\[\/b\](.*)/g);
+            			$preVal 		= $main.previewBold("preview_" + mainID, $preContent, $preElement, $postContent);
 					}
 
 					//list replacement
@@ -245,23 +296,34 @@ if (jQuery) {
 					$preVal		= $preVal.replace(/\[\*\](.*)\n/g, "<li>$1</li>");
 
 					//replace italics
-					$preVal		= $preVal.replace(/\[i\](.*)\[\/i\]/g, "<em>$1</em>");
+					if ($preVal.match(/\[i\](.*)\[\/i\]/g)) {
+            			$splitter 		= $preVal.split(/(.*)\[i\](.*)\[\/i\](.*)/g);
+            			$preVal 		= $main.previewItalic("preview_" + mainID, $splitter);
+					}
 
 					//replace underline
-					$preVal		= $preVal.replace(/\[u\](.*)\[\/u\]/g, "<span style='border-bottom: 1px dotted'>$1</span>");
+					if ($preVal.match(/\[u\](.*)\[\/u\]/g)) {
+            			$splitter 		= $preVal.split(/(.*)\[u\](.*)\[\/u\](.*)/g);
+            			$preVal 		= $main.previewUnderline("preview_" + mainID, $splitter);
+					}
 
 					//replace headers
-					$preVal		= $preVal.replace(/\[h([0-9]+)\](.*)\[\/h([0-9]+)\]/g, "<h$1>$2</h$1>");
+					if ($preVal.match(/\[h([0-9]+)\](.*)\[\/h([0-9]+)\]/g)) {
+						$splitter 	= $preVal.split(/(.*)\[h([0-9]+)\](.*)\[\/h([0-9]+)\](.*)/g);
+						$preVal		= $main.previewHeader("preview_" + mainID, $splitter);
+					}
 
 					//replace youtube
 					$preVal		= $preVal.replace(/\[youtube\]([a-zA-Z0-9]+)\[\/youtube\]/g, "<iframe width='120' height='120' src='http://www.youtube.com/embed/$1?theme=light&color=red' frameborder='0' allowfullscreen></iframe>");
 
 					//image replace
+					if ($preVal.match(/\[img=(.*)\](.*)\[\/img\]/g)) {
+
 					$preVal		= $preVal.replace(/\[img=(.*)\](.*)\[\/img\]/g, "<img src='$1' title='$2' /><caption>\2</caption>");
 					$preVal		= $preVal.replace(/\[img\](.*)\[\/img\]/g, "<img src='$1' title='$2' /><caption>\2</caption>");
 
 					//link replace
-					$preVal		= $preVal.replace(/\[url=("([a-zA-Z0-9\:\/\.\?\=\-]+)")\](.*)\[\/url\]/g, "<a href='$2' title='$3'>$3</a>");
+					$preVal		= $preVal.replace(/\[url=("(.*)")\](.*)\[\/url\]/g, "<a href='$2' title='$3'>$3</a>");
 					$preVal		= $preVal.replace(/\[url=(.*)\](.*)\[\/url\]/g, "<a href='$1' title='$2'>$2</a>");
 
 					//hard line replace
