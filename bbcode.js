@@ -156,20 +156,15 @@ if (jQuery) {
 
 			makeContainer: function(mainID) {
 				$textArea	= $("#" + mainID);
-				$place		= $textArea.attr("placeholder");
-				$name		= $textArea.attr("name");
-				$title		= $textArea.attr("title");
+				$label		= $("#" + mainID + "label");
+				$textArea.detach();
 
 				$container	= "<div id=\"bbContainer_" + mainID + "\">";
 				$container += "<div id=\"" + mainID + "bbCode\" class=\"bbCode\"></div>";
-				$container += "<textarea id=\"" + mainID + "pre\" placeholder=\"" + $place + "\" title=\"" + $title + "\" name=\"" + $name + "\"></textarea>";
+				$container += $textArea;
 				$container += "</div>";
 
-				$textArea.before($container);
-				$textArea.remove();
-
-				$("#" + mainID + "pre").before("<textarea id=\"" + mainID + "\" placeholder=\"" + $place + "\" title=\"" + $title + "\" name=\"" + $name + "\"></textarea>");
-				$("#" + mainID + "pre").remove();
+				$label.after($container);
 			}
 
 			triggerChange: function($main, mainID, preview) {
