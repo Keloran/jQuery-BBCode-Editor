@@ -22,7 +22,7 @@ if (jQuery) {
 				$mainObj	= document.getElementById($mainID);
 				$bbCode		= $($bbCodeID);
 
-				$main.makeButtons($mainID, $main);
+				$main.makeButtons($mainID, $main, $bbCode);
 
 				//Counter for things like twitter
 				if (settings.counter) {
@@ -61,7 +61,7 @@ if (jQuery) {
 				$label.after($container);
 			},
 
-			makeButtons: function(mainID, $main) {
+			makeButtons: function(mainID, $main, $bbCode) {
 				$mainID = $("#" + mainID);
 
 				//bold
