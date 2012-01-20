@@ -199,7 +199,8 @@ if (jQuery) {
 				}
 			},
 
-			previewBold: function(mainArea, $splitter) {
+			previewBold: function(mainArea, $preVal) {
+				$splitter 		= $preVal.split(/(.*)\[b\](.*)\[\/b\](.*)/g);
 				$preContent		= $splitter[1];
             	$preElement 	= $splitter[2];
             	$postContent	= $splitter[3];
@@ -216,7 +217,8 @@ if (jQuery) {
    				return $ret;
 			},
 
-			previewItalic: function(mainArea, $splitter) {
+			previewItalic: function(mainArea, $preVal) {
+				$splitter 		= $preVal.split(/(.*)\[i\](.*)\[\/i\](.*)/g);
 				$preContent 	= $splitter[1];
             	$preElement 	= $splitter[2];
             	$postContent 	= $splitter[3];
@@ -233,7 +235,8 @@ if (jQuery) {
    				return $ret;
 			},
 
-			previewUnderline: function(mainArea, $splitter) {
+			previewUnderline: function(mainArea, $preVal) {
+				$splitter 		= $preVal.split(/(.*)\[u\](.*)\[\/u\](.*)/g);
 				$preContent 	= $splitter[1];
             	$preElement 	= $splitter[2];
             	$postContent 	= $splitter[3];
@@ -250,7 +253,8 @@ if (jQuery) {
    				return $ret;
 			},
 
-			previewHeader: function(mainArea, $splitter) {
+			previewHeader: function(mainArea, $preVal) {
+				$splitter 		= $preVal.split(/(.*)\[h([0-9]+)\](.*)\[\/h([0-9]+)\](.*)/g);
 				$preContent		= $splitter[1];
 				$hLevel			= $splitter[2];
 				$preElement		= $splitter[3];
@@ -286,8 +290,7 @@ if (jQuery) {
 
 					//bold replace
 					if ($preVal.match(/\[b\](.*)\[\/b\]/g)) {
-            			$splitter 		= $preVal.split(/(.*)\[b\](.*)\[\/b\](.*)/g);
-            			$preVal 		= $main.previewBold("preview_" + mainID, $preContent, $preElement, $postContent);
+            			$preVal = $main.previewBold("preview_" + mainID, $preVal);
 					}
 
 					//list replacement
@@ -297,20 +300,17 @@ if (jQuery) {
 
 					//replace italics
 					if ($preVal.match(/\[i\](.*)\[\/i\]/g)) {
-            			$splitter 		= $preVal.split(/(.*)\[i\](.*)\[\/i\](.*)/g);
-            			$preVal 		= $main.previewItalic("preview_" + mainID, $splitter);
+            			$preVal = $main.previewItalic("preview_" + mainID, $preVal);
 					}
 
 					//replace underline
 					if ($preVal.match(/\[u\](.*)\[\/u\]/g)) {
-            			$splitter 		= $preVal.split(/(.*)\[u\](.*)\[\/u\](.*)/g);
-            			$preVal 		= $main.previewUnderline("preview_" + mainID, $splitter);
+            			$preVal = $main.previewUnderline("preview_" + mainID, $preVal);
 					}
 
 					//replace headers
 					if ($preVal.match(/\[h([0-9]+)\](.*)\[\/h([0-9]+)\]/g)) {
-						$splitter 	= $preVal.split(/(.*)\[h([0-9]+)\](.*)\[\/h([0-9]+)\](.*)/g);
-						$preVal		= $main.previewHeader("preview_" + mainID, $splitter);
+						$preVal = $main.previewHeader("preview_" + mainID, $preVal);
 					}
 
 					//replace youtube
