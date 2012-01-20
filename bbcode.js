@@ -159,6 +159,8 @@ if (jQuery) {
 				$label		= $("#" + mainID + "label");
 				$textArea.detach();
 
+				console.log($("#mainArea"));
+
 				$container	= "<div id=\"bbContainer_" + mainID + "\">";
 				$container += "<div id=\"" + mainID + "bbCode\" class=\"bbCode\"></div>";
 				$container += $textArea;
