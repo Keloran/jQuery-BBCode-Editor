@@ -8,6 +8,7 @@ if (jQuery) {
 		$.fn.extend({
 			bbCode: function(options) {
 				var main, $bbCode, $html, $bbCodeID, $mainID, $ret, $item, $listNum, $listItems, $bbCounter;
+				var $backOptions = options;
 
 				var settings = $.extend({
 					"counter":	false,
@@ -16,7 +17,7 @@ if (jQuery) {
 
 				$main		= $(this);
 				$bbCodeID	= "#" + $(this).attr("id") + "bbCode";
-				if (!$($bbCodeID).attr("id")) { $main.makeContainer($(this).attr("id")); }
+				if (!$($bbCodeID).attr("id")) { $main.makeContainer($(this).attr("id"), $backOptions); }
 
 				$mainID		= $(this).attr("id");
 				$mainObj	= document.getElementById($mainID);
@@ -44,14 +45,12 @@ if (jQuery) {
 				$("#"+ $mainID).keyup(function() { $main.triggerChange($main, $mainID, settings.preview); });
 			},
 
-			makeContainer: function(mainID) {
+			makeContainer: function(mainID, $backOptions) {
 				$textArea	= $("#" + mainID);
 				$label		= $("#" + mainID + "label");
 
 				$title		= $textArea.attr("title");
 				$place		= $textArea.attr("placeholder");
-
-				$textArea.detach();
 
 				$container	= "<div id=\"bbContainer_" + mainID + "\">";
 				$container += "<div id=\"" + mainID + "bbCode\" class=\"bbCode\"></div>";
@@ -59,6 +58,8 @@ if (jQuery) {
 				$container += "</div>";
 
 				$label.after($container);
+				$textArea.remove();
+				$("#" + mainID).bbCode($backOptions);
 			},
 
 			makeButtons: function(mainID, $main, $bbCode) {
