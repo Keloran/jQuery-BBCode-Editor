@@ -22,6 +22,31 @@ if (jQuery) {
 				$mainObj	= document.getElementById($mainID);
 				$bbCode		= $($bbCodeID);
 
+				$main.makeButtons($mainID);
+
+				//Counter for things like twitter
+				if (settings.counter) {
+					$bbCode.append("<br />");
+					$bbCode.append("<div id=\"bbCounter_" + $mainID + "\" class=\"charsLeft\"></div>");
+				}
+
+				//size the buttons that are left
+				$("button").css({
+					width: "16px",
+					height: "16px",
+					"min-width": "16px"
+				});
+
+				//make the preview area if its turned on
+				if (settings.preview) { $main.makePreview($mainID); }
+
+				//updater depending on preview or not
+				$("#"+ $mainID).keyup(function() { $main.triggerChange($main, $mainID, settings.preview); });
+			},
+
+			makeButtons: function(mainID) {
+				$mainID = $("#" + $mainID);
+
 				//bold
 				$bbCode.append("<span class=\"bbCodeButton sprite_text_bold\" id=\"bold" + $mainID + "\">Bold</span>");
 				$("#bold" + $mainID).button({text: false, icons: {primary: "boldBB"}}).click(function() {
@@ -133,25 +158,6 @@ if (jQuery) {
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
 				$(".bbCodeButton").each(function(i) { $(this).not(".ui-button").unbind().remove(); });
-
-				//Counter for things like twitter
-				if (settings.counter) {
-					$bbCode.append("<br />");
-					$bbCode.append("<div id=\"bbCounter_" + $mainID + "\" class=\"charsLeft\"></div>");
-				}
-
-				//size the buttons that are left
-				$("button").css({
-					width: "16px",
-					height: "16px",
-					"min-width": "16px"
-				});
-
-				//make the preview area if its turned on
-				if (settings.preview) { $main.makePreview($mainID); }
-
-				//updater depending on preview or not
-				$("#"+ $mainID).keyup(function() { $main.triggerChange($main, $mainID, settings.preview); });
 			},
 
 			makeContainer: function(mainID) {
@@ -167,7 +173,7 @@ if (jQuery) {
 				$container += "</div>";
 
 				$label.after($container);
-			}
+			},
 
 			triggerChange: function($main, mainID, preview) {
 				$main.fixReplication(mainID);
