@@ -233,7 +233,7 @@ if (jQuery) {
             			$preContent = $splitter[1];
             			$preElement = $splitter[2];
             			$postContent = $splitter[3];
-            			$preVal = previewBold("stuff", $preContent, $preElement, $postContent);
+            			$preVal = $main.previewBold("stuff", $preContent, $preElement, $postContent);
 					}
 
 					//list replacement
