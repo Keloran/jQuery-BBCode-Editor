@@ -6,6 +6,22 @@ if (jQuery) {
 
 	(function($) {
 		$.fn.extend({
+			makeContainer: function(mainID) {
+				$textArea	= $("#" + mainID);
+				$place		= $textArea.attr("placeholder");
+				$name		= $textArea.attr("name");
+				$title		= $textArea.attr("title");
+
+				$label		= $("#" + mainID + "label");
+				$container	= "<div id=\"bbContainer_" + mainID + "\">";
+				$container += "<div id=\"" + mainID + "bbCode\" class=\"bbCode\"></div>";
+				$container += "<textarea id=\"" + mainID + "\" placeholder=\"" + $place + "\" title=\"" + $title + "\" name=\"" + $name + "\"></textarea>";
+				$container += "</div>";
+
+				$label.after($container);
+				$textArea.remove();
+			}
+
 			bbCode: function(options) {
 				var main, $bbCode, $html, $bbCodeID, $mainID, $ret, $item, $listNum, $listItems, $bbCounter;
 
@@ -16,6 +32,8 @@ if (jQuery) {
 
 				$main		= $(this);
 				$bbCodeID	= "#" + $(this).attr("id") + "bbCode";
+				if (!$bbCodeID) { $main.makeContainer($(this).attr("id")); }
+
 				$mainID		= $(this).attr("id");
 				$mainObj	= document.getElementById($mainID);
 				$bbCode		= $($bbCodeID);
@@ -180,15 +198,21 @@ if (jQuery) {
 				$preview.html($preVal);
 				$preVal			= $preview.html();
 
+				$preElement1	= false;
+				$preElement2	= false;
+				$preElement3	= false;
+
 				//if there is actually content
 				if ($preVal) {
+					//replace new lines
+					$preVal		= $preVal.replace(/\n/g, "<br />");
+
+					//bold replace
+
 					//list replacement
 					$preVal		= $preVal.replace(/\[list\]/g, "<ul>");
 					$preVal		= $preVal.replace(/\[\/list\]/g, "</ul>");
 					$preVal		= $preVal.replace(/\[\*\](.*)\n/g, "<li>$1</li>");
-
-					//replace new lines
-					$preVal		= $preVal.replace(/\n/g, "<br />");
 
 					//replace bold
 					$preVal		= $preVal.replace(/\[b\](.*)\[\/b\]/g, "<strong>$1</strong>");
