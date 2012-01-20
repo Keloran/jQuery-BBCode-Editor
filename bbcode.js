@@ -18,7 +18,7 @@ if (jQuery) {
 				$container += "<textarea id=\"" + mainID + "\" placeholder=\"" + $place + "\" title=\"" + $title + "\" name=\"" + $name + "\"></textarea>";
 				$container += "</div>";
 
-				$label.after($container);
+				$textArea.before($container);
 				$textArea.remove();
 			}
 
@@ -32,7 +32,7 @@ if (jQuery) {
 
 				$main		= $(this);
 				$bbCodeID	= "#" + $(this).attr("id") + "bbCode";
-				if ($($bbCodeID).attr("id") == "undefined") { $main.makeContainer($(this).attr("id")); }
+				if (!$($bbCodeID).attr("id")) { $main.makeContainer($(this).attr("id")); }
 
 				$mainID		= $(this).attr("id");
 				$mainObj	= document.getElementById($mainID);
