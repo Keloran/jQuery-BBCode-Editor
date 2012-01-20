@@ -6,22 +6,6 @@ if (jQuery) {
 
 	(function($) {
 		$.fn.extend({
-			makeContainer: function(mainID) {
-				$textArea	= $("#" + mainID);
-				$place		= $textArea.attr("placeholder");
-				$name		= $textArea.attr("name");
-				$title		= $textArea.attr("title");
-
-				$label		= $("#" + mainID + "label");
-				$container	= "<div id=\"bbContainer_" + mainID + "\">";
-				$container += "<div id=\"" + mainID + "bbCode\" class=\"bbCode\"></div>";
-				$container += "<textarea id=\"" + mainID + "\" placeholder=\"" + $place + "\" title=\"" + $title + "\" name=\"" + $name + "\"></textarea>";
-				$container += "</div>";
-
-				$textArea.before($container);
-				$textArea.remove();
-			}
-
 			bbCode: function(options) {
 				var main, $bbCode, $html, $bbCodeID, $mainID, $ret, $item, $listNum, $listItems, $bbCounter;
 
@@ -169,6 +153,24 @@ if (jQuery) {
 				//updater depending on preview or not
 				$("#"+ $mainID).keyup(function() { $main.triggerChange($main, $mainID, settings.preview); });
 			},
+
+			makeContainer: function(mainID) {
+				$textArea	= $("#" + mainID);
+				$place		= $textArea.attr("placeholder");
+				$name		= $textArea.attr("name");
+				$title		= $textArea.attr("title");
+
+				$container	= "<div id=\"bbContainer_" + mainID + "\">";
+				$container += "<div id=\"" + mainID + "bbCode\" class=\"bbCode\"></div>";
+				$container += "<textarea id=\"" + mainID + "pre\" placeholder=\"" + $place + "\" title=\"" + $title + "\" name=\"" + $name + "\"></textarea>";
+				$container += "</div>";
+
+				$textArea.before($container);
+				$textArea.remove();
+
+				$("#" + mainID + "pre").before("<textarea id=\"" + mainID + "\" placeholder=\"" + $place + "\" title=\"" + $title + "\" name=\"" + $name + "\"></textarea>");
+				$("#" + mainID + "pre").remove();
+			}
 
 			triggerChange: function($main, mainID, preview) {
 				$main.fixReplication(mainID);
