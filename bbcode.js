@@ -206,7 +206,9 @@ if (jQuery) {
     			preAttach 		= document.getElementById(mainArea);
     			preAttach.appendChild(preRender);
 
-   				$("#preRender").html(preContent + "<b>" + content + "</b>" + postContent);
+    			console.log(document.getElementById(mainArea).selectionStart);
+
+   				$("#preRender").html(preContent + "<strong>" + content + "</strong>" + postContent);
    				$ret = $("#preRender").html();
    				$("#preRender").remove();
    				return $ret;
@@ -241,9 +243,6 @@ if (jQuery) {
 					$preVal		= $preVal.replace(/\[list\]/g, "<ul>");
 					$preVal		= $preVal.replace(/\[\/list\]/g, "</ul>");
 					$preVal		= $preVal.replace(/\[\*\](.*)\n/g, "<li>$1</li>");
-
-					//replace bold
-					$preVal		= $preVal.replace(/\[b\](.*)\[\/b\]/g, "<strong>$1</strong>");
 
 					//replace italics
 					$preVal		= $preVal.replace(/\[i\](.*)\[\/i\]/g, "<em>$1</em>");
