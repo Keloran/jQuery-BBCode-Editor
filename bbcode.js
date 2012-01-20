@@ -32,7 +32,7 @@ if (jQuery) {
 
 				$main		= $(this);
 				$bbCodeID	= "#" + $(this).attr("id") + "bbCode";
-				if (!$bbCodeID) { $main.makeContainer($(this).attr("id")); }
+				if ($($bbCodeID).attr("id") == "undefined") { $main.makeContainer($(this).attr("id")); }
 
 				$mainID		= $(this).attr("id");
 				$mainObj	= document.getElementById($mainID);
