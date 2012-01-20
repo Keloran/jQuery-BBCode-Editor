@@ -18,11 +18,13 @@ if (jQuery) {
 				$bbCodeID	= "#" + $(this).attr("id") + "bbCode";
 				if (!$($bbCodeID).attr("id")) { $main.makeContainer($(this).attr("id")); }
 
+				console.log("fuck");
+
 				$mainID		= $(this).attr("id");
 				$mainObj	= document.getElementById($mainID);
 				$bbCode		= $($bbCodeID);
 
-				$main.makeButtons($mainID);
+				$main.makeButtons($mainID, $main);
 
 				//Counter for things like twitter
 				if (settings.counter) {
@@ -44,7 +46,22 @@ if (jQuery) {
 				$("#"+ $mainID).keyup(function() { $main.triggerChange($main, $mainID, settings.preview); });
 			},
 
-			makeButtons: function(mainID) {
+			makeContainer: function(mainID) {
+				$textArea	= $("#" + mainID);
+				$label		= $("#" + mainID + "label");
+				$textArea.detach();
+
+				console.log($("#mainArea"));
+
+				$container	= "<div id=\"bbContainer_" + mainID + "\">";
+				$container += "<div id=\"" + mainID + "bbCode\" class=\"bbCode\"></div>";
+				$container += $textArea;
+				$container += "</div>";
+
+				$label.after($container);
+			},
+
+			makeButtons: function(mainID, $main) {
 				$mainID = $("#" + $mainID);
 
 				//bold
@@ -158,21 +175,6 @@ if (jQuery) {
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
 				$(".bbCodeButton").each(function(i) { $(this).not(".ui-button").unbind().remove(); });
-			},
-
-			makeContainer: function(mainID) {
-				$textArea	= $("#" + mainID);
-				$label		= $("#" + mainID + "label");
-				$textArea.detach();
-
-				console.log($("#mainArea"));
-
-				$container	= "<div id=\"bbContainer_" + mainID + "\">";
-				$container += "<div id=\"" + mainID + "bbCode\" class=\"bbCode\"></div>";
-				$container += $textArea;
-				$container += "</div>";
-
-				$label.after($container);
 			},
 
 			triggerChange: function($main, mainID, preview) {
