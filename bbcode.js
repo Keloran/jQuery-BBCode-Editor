@@ -47,7 +47,7 @@ if (jQuery) {
 
 			makeContainer: function(mainID, $backOptions) {
 				$textArea	= $("#" + mainID);
-				$label		= $("#" + mainID + "label");
+				$label		= $("#label" + mainID);
 
 				$title		= $textArea.attr("title");
 				$place		= $textArea.attr("placeholder");
