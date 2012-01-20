@@ -199,6 +199,18 @@ if (jQuery) {
 				}
 			},
 
+			previewBold: function(mainArea, preContent, content, postContent) {
+				preRender = document.createElement("div");
+    			preRender.id = "preRender";
+    			preAttach = document.getElementById(mainArea);
+    			preAttach.appendChild(preRender);
+
+   				$("#preRender").html(preContent + "<b>" + content + "</b>" + postContent);
+   				$ret = $("#preRender").html();
+   				$("#preRender").remove();
+   				return $ret;
+			},
+
 			updatePreview: function(mainID) {
 				$content 		= $("#" + mainID);
 				$preVal			= $content.val();
@@ -216,6 +228,13 @@ if (jQuery) {
 					$preVal		= $preVal.replace(/\n/g, "<br />");
 
 					//bold replace
+					if ($preVal.match(/\[b\](.*)\[\/b\]/g)) {
+            			$splitter = $preVal.split(/(.*)\[b\](.*)\[\/b\](.*)/g);
+            			$preContent = $splitter[1];
+            			$preElement = $splitter[2];
+            			$postContent = $splitter[3];
+            			$preVal = previewBold("stuff", $preContent, $preElement, $postContent);
+					}
 
 					//list replacement
 					$preVal		= $preVal.replace(/\[list\]/g, "<ul>");
