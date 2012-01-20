@@ -47,13 +47,15 @@ if (jQuery) {
 			makeContainer: function(mainID) {
 				$textArea	= $("#" + mainID);
 				$label		= $("#" + mainID + "label");
-				$textArea.detach();
 
-				console.log($("#mainArea"));
+				$title		= $textArea.attr("title");
+				$place		= $textArea.attr("placeholder");
+
+				$textArea.detach();
 
 				$container	= "<div id=\"bbContainer_" + mainID + "\">";
 				$container += "<div id=\"" + mainID + "bbCode\" class=\"bbCode\"></div>";
-				$container += $textArea;
+				$container += "<textarea id=\"" + mainID + "\" title=\"" + $title + "\" placeholder=\"" + $place + "\"></textarea>";
 				$container += "</div>";
 
 				$label.after($container);
