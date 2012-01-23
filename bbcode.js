@@ -213,9 +213,11 @@ if (jQuery) {
 				preRender.id	= "preRender";
 				preAttach		= document.getElementById(mainArea);
 				preAttach.appendChild(preRender);
+
 				$("#preRender").html($preContent + "<strong>" + $preElement + "</strong>" + $postContent);
-				$ret			= $("#preRender").html();
+				$ret = $("#preRender").html();
 				$("#preRender").remove();
+
 				return $ret;
 			},
 
@@ -230,9 +232,11 @@ if (jQuery) {
 				preRender.id	= "preRender";
 				preAttach		= document.getElementById(mainArea);
 				preAttach.appendChild(preRender);
+
 				$("#preRender").html($preContent + "<em>" + $preElement + "</em>" + $postContent);
-				$ret			= $("#preRender").html();
+				$ret = $("#preRender").html();
 				$("#preRender").remove();
+
 				return $ret;
 			},
 
@@ -247,9 +251,11 @@ if (jQuery) {
 				preRender.id	= "preRender";
 				preAttach		= document.getElementById(mainArea);
 				preAttach.appendChild(preRender);
+
 				$("#preRender").html($preContent + "<span style=\"border-bottom: 1px dotted\">" + $preElement + "</span>" + $postContent);
-				$ret			= $("#preRender").html();
+				$ret = $("#preRender").html();
 				$("#preRender").remove();
+
 				return $ret;
 			},
 
@@ -260,6 +266,7 @@ if (jQuery) {
 				$hLevel			= $splitter[2];
 				$preElement		= $splitter[3];
 				$postContent	= $splitter[4];
+
 				preRender		= document.createElement("div");
 				preRender.id	= "preRender";
 				preAttach		= document.getElementById(mainArea);
@@ -267,6 +274,114 @@ if (jQuery) {
 				$("#preRender").html($preContent + "<h" + $hLevel + ">" + $preElement + "</h" + $hLevel + ">" + $postContent);
 				$ret			= $("#preRender").html();
 				$("#preRender").remove();
+
+				return $ret;
+			},
+
+			previewYouTube: function (mainArea, $preVal) {
+				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach;
+				$splitter		= $preVal.split(/(.*)\[youtube\]([a-zA-Z0-9]+)\[\/youtube\](.*)/g);
+				$preContent		= $splitter[1];
+				$preElement		= $splitter[2];
+				$postContent	= $splitter[3];
+
+				preRender		= document.createElement("div");
+				preRender.id	= "preRender";
+				preAttach		= document.getElementById(mainArea);
+				preAttach.appendChild(preRender);
+
+				$("#preRender").html($preContent + "<iframe width='120' height='120' src='http://www.youtube/com/embed/" + $preElement + "?theme=light&color=red' frameborder='0' allowfullscreen></iframe>" + $postContent);
+				$ret = $("#preRender").html();
+				$("#preRender").remove();
+
+				return $ret;
+			},
+
+			previewImage: function (mainArea, $preVal, noCaption) {
+				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach, $caption, $madeContent;
+				if (noCaption) {
+					$splitter	= $preVal.split(/(.*)\[img\](.*)\[\/img\](.*)/g);
+				} else {
+					$splitter	= $preVal.split(/(.*)\[img=(.*)\](.*)\[\/img\](.*)/g);
+				}
+				$preContent		= $splitter[1];
+				$preElement		= $splitter[2];
+
+				if ($splitter.length == 4) {
+					$caption		= $splitter[3];
+					$postContent	= $splitter[4];
+				} else {
+					$postContent = $splitter[3];
+				}
+
+				preRender		= document.createElement("div");
+				preRender.id	= "preRender";
+				preAttach		= document.getElementById(mainArea);
+				preAttach.appendChild(preRender);
+
+				if ($caption) {
+					$madeContent	= $preContent + "<img src='" + $preElement + "' title='" + $caption + "' /><caption>" + $caption + "</caption>" + $postContent;
+				} else {
+					$madeContent	= $preContent + "<img src='" + $preElement + "' />" + $postContent;
+				}
+				$("#preRender").html($madeContent);
+				$ret = $("#preRender").html();
+				$("#preRender").remove();
+
+				return $ret;
+			},
+
+			previewLink: function (mainArea, $preVal, enclosed) {
+				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach, $content;
+				if (enclosed) {
+					$splitter		= $preVal.split(/(.*)\[url=("(.*)")\](.*)\[\/url\](.*)/g);
+					$preElement		= $splitter[3];
+					$content		= $splitter[4];
+					$postContent	= $splitter[5];
+				} else {
+					$splitter		= $preVal.split(/(.*)\[url=(.*)\](.*)\[\/url\](.*)/g);
+					$preElement		= $splitter[2];
+					$content		= $splitter[3];
+					$postContent	= $splitter[4];
+				}
+				$preContent			= $splitter[1];
+
+				preRender		= document.createElement("div");
+				preRender.id	= "preRender";
+				preAttach		= document.getElementById(mainArea);
+				preAttach.appendChild(preRender);
+
+				$("#preRender").html($preContent + "<a href='" + $preElement + "' title='" + $content + "'>" + $content + "</a>" + $postContent);
+				$ret = $("#preRender").html();
+				$("#preRender").remove();
+
+				return $ret;
+			},
+
+			previewColor: function(mainArea, $preVal, enclosed) {
+				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach, $content;
+				if (enclosed) {
+					$splitter		= $preVal.split(/(.*)\[COLOR=("([a-zA-Z0-9\#]+)")\](.*)\[\/COLOR\](.*)/g);
+					$preElement		= $splitter[3];
+					$content		= $splitter[4];
+					$postContent	= $splitter[5];
+				} else {
+					$splitter		= $preVal.split(/(.*)\[color=([a-zA-Z0-9\#]+)\](.*)\[\/color\](.*)/g);
+					$preElement		= $splitter[2];
+					$content		= $splitter[3];
+					$postContent	= $splitter[4];
+				}
+				$preContent			= $splitter[1];
+
+				preRender		= document.createElement("div");
+				preRender.id	= "preRender";
+				preAttach		= document.getElementById(mainArea);
+				preAttach.appendChild(preRender);
+
+				$("#preRender").html($preContent + "<font color='" + $preElement + "'>" + $content + "</font>" + $postContent);
+				$ret = $("#preRender").html();
+				$("#preRender").remove();
+
 				return $ret;
 			},
 
@@ -286,6 +401,9 @@ if (jQuery) {
 					//replace new lines
 					$preVal		= $preVal.replace(/\n/g, "<br />");
 
+					//hard line replace
+					$preVal		= $preVal.replace(/\[hr\]\[\/hr\]/g, "<hr />");
+
 					//bold replace
 					if ($preVal.match(/\[b\](.*)\[\/b\]/g)) { $preVal = $main.previewBold("preview_" + mainID, $preVal); }
 
@@ -304,24 +422,19 @@ if (jQuery) {
 					if ($preVal.match(/\[h([0-9]+)\](.*)\[\/h([0-9]+)\]/g)) { $preVal = $main.previewHeader("preview_" + mainID, $preVal); }
 
 					//replace youtube
-					$preVal		= $preVal.replace(/\[youtube\]([a-zA-Z0-9]+)\[\/youtube\]/g, "<iframe width='120' height='120' src='http://www.youtube.com/embed/$1?theme=light&color=red' frameborder='0' allowfullscreen></iframe>");
+					if ($preVal.match(/\[youtube\]([a-zA-Z0-9]+)\[\/youtube\]/g)) { $preVal = $main.previewYouTube("preview_" + mainID, $preVal); }
 
 					//image replace
-					if ($preVal.match(/\[img=(.*)\](.*)\[\/img\]/g)) {
-						$preVal		= $preVal.replace(/\[img=(.*)\](.*)\[\/img\]/g, "<img src='$1' title='$2' /><caption>$2</caption>");
-						$preVal		= $preVal.replace(/\[img\](.*)\[\/img\]/g, "<img src='$1' title='$2' /><caption>$2</caption>");
-					}
+					if ($preVal.match(/\[img=(.*)\](.*)\[\/img\]/g)) { $preVal = $main.previewImage("preview_" + mainID, $preVal, false); }
+					if ($preVal.match(/\[img\](.*)\[\/img\]/g)) { $preVal = $main.previewImage("preview_" + mainID, $preVal, true); }
 
 					//link replace
-					$preVal		= $preVal.replace(/\[url=("(.*)")\](.*)\[\/url\]/g, "<a href='$2' title='$3'>$3</a>");
-					$preVal		= $preVal.replace(/\[url=(.*)\](.*)\[\/url\]/g, "<a href='$1' title='$2'>$2</a>");
-
-					//hard line replace
-					$preVal		= $preVal.replace(/\[hr\]\[\/hr\]/g, "<hr />");
+					if ($preVal.match(/\[url=("(.*)")\](.*)\[\/url\]/g)) { $preVal = $main.previewLink("preview_" + mainID, $preVal, true); }
+					if ($preVal.match(/\[url=(.*)\](.*)\[\/url\]/g)) { $preVal = $main.previewLink("preview_" + mainID, $preVal, false); }
 
 					//color replace
-					$preVal		= $preVal.replace(/\[COLOR=("([a-zA-Z0-9\#]+)")\](.*)\[\/COLOR\]/g, "<font color='$2'>$3</font>");
-					$preVal		= $preVal.replace(/\[color=([a-zA-Z0-9\#]+)\](.*)\[\/color\]/g, "<font color='$1'>$2</font>");
+					if ($preVal.match(/\[COLOR=("([a-zA-Z0-9\#]+)")\](.*)\[\/COLOR\]/g)) { $preVal = $main.previewColor("preview_" + mainID, $preVal, true); }
+					if ($preVal.match(/\[color=([a-zA-Z0-9\#]+)\](.*)\[\/color\]/g)) { $preVal = $main.previewColor("preview_" + mainID, $preVal, false); }
 
 					//actually insert the new content
 					$preview = $("#preview_" + mainID);
