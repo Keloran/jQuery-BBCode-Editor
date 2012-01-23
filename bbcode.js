@@ -7,7 +7,7 @@ if (jQuery) {
 	(function ($) {
 		$.fn.extend({
 			bbCode: function (options) {
-				var main, $bbCode, $html, $bbCodeID, $mainID, $ret, $item, $listNum, $listItems, $bbCounter, $backOptions, $mainObj, $main, settings;
+				var $bbCodeID, $mainID, $backOptions, $mainObj, $main, settings, $bbCode;
 				$backOptions = options;
 
 				settings = $.extend({
@@ -183,7 +183,7 @@ if (jQuery) {
 			triggerChange: function ($main, mainID, preview) {
 				$main.fixReplication(mainID);
 
-				if (preview) { $main.updatePreview(mainID); }
+				if (preview) { $main.updatePreview(mainID, $main); }
 			},
 
 			fixReplication: function (mainID) {
@@ -210,82 +210,73 @@ if (jQuery) {
 				$postContent	= $splitter[3];
 
 				preRender		= document.createElement("div");
-    			preRender.id	= "preRender";
-
-    			preAttach		= document.getElementById(mainArea);
-    			preAttach.appendChild(preRender);
-
-   				$("#preRender").html($preContent + "<strong>" + $preElement + "</strong>" + $postContent);
-   				$ret			= $("#preRender").html();
-   				$("#preRender").remove();
-   				return $ret;
+				preRender.id	= "preRender";
+				preAttach		= document.getElementById(mainArea);
+				preAttach.appendChild(preRender);
+				$("#preRender").html($preContent + "<strong>" + $preElement + "</strong>" + $postContent);
+				$ret			= $("#preRender").html();
+				$("#preRender").remove();
+				return $ret;
 			},
 
 			previewItalic: function (mainArea, $preVal) {
 				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach;
 				$splitter		= $preVal.split(/(.*)\[i\](.*)\[\/i\](.*)/g);
 				$preContent		= $splitter[1];
-            	$preElement		= $splitter[2];
-            	$postContent	= $splitter[3];
+				$preElement		= $splitter[2];
+				$postContent	= $splitter[3];
 
 				preRender		= document.createElement("div");
-    			preRender.id	= "preRender";
-
-    			preAttach		= document.getElementById(mainArea);
-    			preAttach.appendChild(preRender);
-
-   				$("#preRender").html($preContent + "<em>" + $preElement + "</em>" + $postContent);
-   				$ret			= $("#preRender").html();
-   				$("#preRender").remove();
-   				return $ret;
+				preRender.id	= "preRender";
+				preAttach		= document.getElementById(mainArea);
+				preAttach.appendChild(preRender);
+				$("#preRender").html($preContent + "<em>" + $preElement + "</em>" + $postContent);
+				$ret			= $("#preRender").html();
+				$("#preRender").remove();
+				return $ret;
 			},
 
 			previewUnderline: function (mainArea, $preVal) {
 				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach;
 				$splitter		= $preVal.split(/(.*)\[u\](.*)\[\/u\](.*)/g);
 				$preContent		= $splitter[1];
-            	$preElement		= $splitter[2];
-            	$postContent	= $splitter[3];
+				$preElement		= $splitter[2];
+				$postContent	= $splitter[3];
 
 				preRender		= document.createElement("div");
-    			preRender.id	= "preRender";
-
-    			preAttach		= document.getElementById(mainArea);
-    			preAttach.appendChild(preRender);
-
-   				$("#preRender").html($preContent + "<span style=\"border-bottom: 1px dotted\">" + $preElement + "</span>" + $postContent);
-   				$ret			= $("#preRender").html();
-   				$("#preRender").remove();
-   				return $ret;
+				preRender.id	= "preRender";
+				preAttach		= document.getElementById(mainArea);
+				preAttach.appendChild(preRender);
+				$("#preRender").html($preContent + "<span style=\"border-bottom: 1px dotted\">" + $preElement + "</span>" + $postContent);
+				$ret			= $("#preRender").html();
+				$("#preRender").remove();
+				return $ret;
 			},
 
 			previewHeader: function (mainArea, $preVal) {
-				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach;
+				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach, $hLevel;
 				$splitter		= $preVal.split(/(.*)\[h([0-9]+)\](.*)\[\/h([0-9]+)\](.*)/g);
 				$preContent		= $splitter[1];
 				$hLevel			= $splitter[2];
 				$preElement		= $splitter[3];
 				$postContent	= $splitter[4];
-
 				preRender		= document.createElement("div");
-    			preRender.id	= "preRender";
-
-    			preAttach		= document.getElementById(mainArea);
-    			preAttach.appendChild(preRender);
-
-   				$("#preRender").html($preContent + "<h" + $hLevel + ">" + $preElement + "</h" + $hLevel +">" + $postContent);
-   				$ret			= $("#preRender").html();
-   				$("#preRender").remove();
-   				return $ret;
+				preRender.id	= "preRender";
+				preAttach		= document.getElementById(mainArea);
+				preAttach.appendChild(preRender);
+				$("#preRender").html($preContent + "<h" + $hLevel + ">" + $preElement + "</h" + $hLevel + ">" + $postContent);
+				$ret			= $("#preRender").html();
+				$("#preRender").remove();
+				return $ret;
 			},
 
-			updatePreview: function (mainID) {
-				$content 		= $("#" + mainID);
+			updatePreview: function (mainID, $main) {
+				var $content, $preVal, $preview, $preElement1, $preElement2, $preElement3;
+				$content		= $("#" + mainID);
 				$preVal			= $content.val();
 				$preview		= $("#preview_" + mainID);
 				$preview.html($preVal);
 				$preVal			= $preview.html();
-
 				$preElement1	= false;
 				$preElement2	= false;
 				$preElement3	= false;
@@ -296,9 +287,7 @@ if (jQuery) {
 					$preVal		= $preVal.replace(/\n/g, "<br />");
 
 					//bold replace
-					if ($preVal.match(/\[b\](.*)\[\/b\]/g)) {
-            			$preVal = $main.previewBold("preview_" + mainID, $preVal);
-					}
+					if ($preVal.match(/\[b\](.*)\[\/b\]/g)) { $preVal = $main.previewBold("preview_" + mainID, $preVal); }
 
 					//list replacement
 					$preVal		= $preVal.replace(/\[list\]/g, "<ul>");
@@ -306,28 +295,22 @@ if (jQuery) {
 					$preVal		= $preVal.replace(/\[\*\](.*)\n/g, "<li>$1</li>");
 
 					//replace italics
-					if ($preVal.match(/\[i\](.*)\[\/i\]/g)) {
-            			$preVal = $main.previewItalic("preview_" + mainID, $preVal);
-					}
+					if ($preVal.match(/\[i\](.*)\[\/i\]/g)) { $preVal = $main.previewItalic("preview_" + mainID, $preVal); }
 
 					//replace underline
-					if ($preVal.match(/\[u\](.*)\[\/u\]/g)) {
-            			$preVal = $main.previewUnderline("preview_" + mainID, $preVal);
-					}
+					if ($preVal.match(/\[u\](.*)\[\/u\]/g)) { $preVal = $main.previewUnderline("preview_" + mainID, $preVal); }
 
 					//replace headers
-					if ($preVal.match(/\[h([0-9]+)\](.*)\[\/h([0-9]+)\]/g)) {
-						$preVal = $main.previewHeader("preview_" + mainID, $preVal);
-					}
+					if ($preVal.match(/\[h([0-9]+)\](.*)\[\/h([0-9]+)\]/g)) { $preVal = $main.previewHeader("preview_" + mainID, $preVal); }
 
 					//replace youtube
 					$preVal		= $preVal.replace(/\[youtube\]([a-zA-Z0-9]+)\[\/youtube\]/g, "<iframe width='120' height='120' src='http://www.youtube.com/embed/$1?theme=light&color=red' frameborder='0' allowfullscreen></iframe>");
 
 					//image replace
 					if ($preVal.match(/\[img=(.*)\](.*)\[\/img\]/g)) {
-
-					$preVal		= $preVal.replace(/\[img=(.*)\](.*)\[\/img\]/g, "<img src='$1' title='$2' /><caption>\2</caption>");
-					$preVal		= $preVal.replace(/\[img\](.*)\[\/img\]/g, "<img src='$1' title='$2' /><caption>\2</caption>");
+						$preVal		= $preVal.replace(/\[img=(.*)\](.*)\[\/img\]/g, "<img src='$1' title='$2' /><caption>$2</caption>");
+						$preVal		= $preVal.replace(/\[img\](.*)\[\/img\]/g, "<img src='$1' title='$2' /><caption>$2</caption>");
+					}
 
 					//link replace
 					$preVal		= $preVal.replace(/\[url=("(.*)")\](.*)\[\/url\]/g, "<a href='$2' title='$3'>$3</a>");
