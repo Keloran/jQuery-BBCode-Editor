@@ -374,7 +374,7 @@ if (jQuery) {
 				return $ret;
 			},
 
-			previewColor: function(mainArea, $preVal, $main, enclosed) {
+			previewColor: function (mainArea, $preVal, $main, enclosed) {
 				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach, $content;
 				if (enclosed) {
 					$splitter		= $preVal.split(/(.*)\[COLOR=("([a-zA-Z0-9\#]+)")\](.*)\[\/COLOR\](.*)/g);
@@ -404,6 +404,51 @@ if (jQuery) {
 				return $ret;
 			},
 
+			previewList: function (mainArea, $preVal, $main) {
+				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach;
+				$splitter		= $preVal.split(/(.*)\[list\](.*)\[\/list\](.*)/g);
+				$preContent		= $splitter[1];
+				$preElement		= $splitter[2];
+				$postContent	= $splitter[3];
+
+				if ($preElement.match(/\[\*\](.*)<br>/g)) { $preElement = $main.previewListItem(mainArea, $preElement, $main); }
+
+				preRender		= document.createElement("div");
+				preRender.id	= "preRender";
+				preAttach		= document.getElementById(mainArea);
+				preAttach.appendChild(preRender);
+
+				$("#preRender").html($preContent + "<ul>" + $preElement + "</ul>" + $postContent);
+				$ret	= $("#preRender").html();
+				$("#preRender").remove();
+
+				if ($ret.match(/\[list\]<br>(.*)\[\/list\]/g)) { $ret = $main.previewList(mainArea, $ret, $main); }
+
+				return $ret;
+			},
+
+			previewListItem: function (mainArea, $preVal, $main) {
+				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach;
+				$splitter		= $preVal.split(/(.*)\[\*\](.*)<br>(.*)/g);
+				$preContent		= $splitter[1];
+				$preElement		= $splitter[2];
+				$postContent	= $splitter[3];
+
+				preRender		= document.createElement("div");
+				preRender.id	= "preRender";
+				preAttach		= document.getElementById(mainArea);
+				preAttach.appendChild(preRender);
+
+				$preElement.replace(/<br>/g, "");
+				$("#preRender").html($preContent + "<li>" + $preElement + "</li>" + $postContent);
+				$ret	= $("#preRender").html();
+				$("#preRender").remove();
+
+				if ($ret.match(/\[\*\](.*)<br>/g)) { $ret = $main.previewListItem(mainArea, $ret, $main); }
+
+				return $ret;
+			},
+
 			updatePreview: function (mainID, $main) {
 				var $content, $preVal, $preview, $preElement1, $preElement2, $preElement3;
 				$content		= $("#" + mainID);
@@ -417,16 +462,14 @@ if (jQuery) {
 
 				//if there is actually content
 				if ($preVal) {
-					//list replacement
-					$preVal		= $preVal.replace(/\[list\]/g, "<ul>");
-					$preVal		= $preVal.replace(/\[\/list\]/g, "</ul>");
-					$preVal		= $preVal.replace(/\[\*\](.*)\n/g, "<li>$1</li>");
-
 					//replace new lines
-					$preVal		= $preVal.replace(/\n/g, "<br />");
+					$preVal		= $preVal.replace(/\n/g, "<br>");
 
 					//hard line replace
-					$preVal		= $preVal.replace(/\[hr\]\[\/hr\]/g, "<hr />");
+					$preVal		= $preVal.replace(/\[hr\]\[\/hr\]/g, "<hr>");
+
+					//list replacement
+					if ($preVal.match(/\[list\]<br>(.*)\[\/list\]/g)) { $main.previewList("preview_" + mainID, $preVal, $main); }
 
 					//bold replace
 					if ($preVal.match(/\[b\](.*)\[\/b\]/g)) { $preVal = $main.previewBold("preview_" + mainID, $preVal, $main); }
