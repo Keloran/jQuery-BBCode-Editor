@@ -417,16 +417,16 @@ if (jQuery) {
 
 				//if there is actually content
 				if ($preVal) {
+					//list replacement
+					$preVal		= $preVal.replace(/\[list\]/g, "<ul>");
+					$preVal		= $preVal.replace(/\[\/list\]/g, "</ul>");
+					$preVal		= $preVal.replace(/\[\*\](.*)\n/g, "<li>$1</li>");
+
 					//replace new lines
 					$preVal		= $preVal.replace(/\n/g, "<br />");
 
 					//hard line replace
 					$preVal		= $preVal.replace(/\[hr\]\[\/hr\]/g, "<hr />");
-
-					//list replacement
-					$preVal		= $preVal.replace(/\[list\]/g, "<ul>");
-					$preVal		= $preVal.replace(/\[\/list\]/g, "</ul>");
-					$preVal		= $preVal.replace(/\[\*\](.*)\n/g, "<li>$1</li>");
 
 					//bold replace
 					if ($preVal.match(/\[b\](.*)\[\/b\]/g)) { $preVal = $main.previewBold("preview_" + mainID, $preVal, $main); }
