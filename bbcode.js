@@ -464,6 +464,7 @@ if (jQuery) {
 				if ($preVal) {
 					//replace new lines
 					$preVal		= $preVal.replace(/\n/g, "<br>");
+					$preVal		= $preVal.replace(/\r/g, "");
 
 					//hard line replace
 					$preVal		= $preVal.replace(/\[hr\]\[\/hr\]/g, "<hr>");
