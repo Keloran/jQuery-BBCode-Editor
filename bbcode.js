@@ -202,7 +202,7 @@ if (jQuery) {
 				}
 			},
 
-			previewBold: function (mainArea, $preVal) {
+			previewBold: function (mainArea, $preVal, $main) {
 				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach;
 				$splitter		= $preVal.split(/(.*)\[b\](.*)\[\/b\](.*)/g);
 				$preContent		= $splitter[1];
@@ -218,10 +218,12 @@ if (jQuery) {
 				$ret = $("#preRender").html();
 				$("#preRender").remove();
 
+				if ($ret.match(/\[b\](.*)\[\/b\]/g)) { $ret = $main.previewBold(mainArea, $ret, $main); }
+
 				return $ret;
 			},
 
-			previewItalic: function (mainArea, $preVal) {
+			previewItalic: function (mainArea, $preVal, $main) {
 				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach;
 				$splitter		= $preVal.split(/(.*)\[i\](.*)\[\/i\](.*)/g);
 				$preContent		= $splitter[1];
@@ -237,10 +239,12 @@ if (jQuery) {
 				$ret = $("#preRender").html();
 				$("#preRender").remove();
 
+				if ($ret.match(/\[i\](.*)\[\/i\]/g)) { $ret = $main.previewItalic(mainArea, $ret, $main); }
+
 				return $ret;
 			},
 
-			previewUnderline: function (mainArea, $preVal) {
+			previewUnderline: function (mainArea, $preVal, $main) {
 				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach;
 				$splitter		= $preVal.split(/(.*)\[u\](.*)\[\/u\](.*)/g);
 				$preContent		= $splitter[1];
@@ -256,10 +260,12 @@ if (jQuery) {
 				$ret = $("#preRender").html();
 				$("#preRender").remove();
 
+				if ($ret.match(/\[u\](.*)\[\/u\]/g)) { $ret = $main.previewUnderline(mainArea, $ret, $main); }
+
 				return $ret;
 			},
 
-			previewHeader: function (mainArea, $preVal) {
+			previewHeader: function (mainArea, $preVal, $main) {
 				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach, $hLevel;
 				$splitter		= $preVal.split(/(.*)\[h([0-9]+)\](.*)\[\/h([0-9]+)\](.*)/g);
 				$preContent		= $splitter[1];
@@ -275,10 +281,12 @@ if (jQuery) {
 				$ret			= $("#preRender").html();
 				$("#preRender").remove();
 
+				if ($ret.match(/\[h([0-9]+)\](.*)\[\/h([0-9]+)\]/g)) { $ret = $main.previewHeader(mainArea, $ret, $main); }
+
 				return $ret;
 			},
 
-			previewYouTube: function (mainArea, $preVal) {
+			previewYouTube: function (mainArea, $preVal, $main) {
 				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach;
 				$splitter		= $preVal.split(/(.*)\[youtube\]([a-zA-Z0-9]+)\[\/youtube\](.*)/g);
 				$preContent		= $splitter[1];
@@ -294,10 +302,12 @@ if (jQuery) {
 				$ret = $("#preRender").html();
 				$("#preRender").remove();
 
+				if ($ret.match(/\[youtube\]([a-zA-Z0-9]+)\[\/youtube\]/g)) { $ret = $main.previewYouTube(mainArea, $ret, $main); }
+
 				return $ret;
 			},
 
-			previewImage: function (mainArea, $preVal, noCaption) {
+			previewImage: function (mainArea, $preVal, $main, noCaption) {
 				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach, $caption, $madeContent;
 				if (noCaption) {
 					$splitter	= $preVal.split(/(.*)\[img\](.*)\[\/img\](.*)/g);
@@ -328,10 +338,13 @@ if (jQuery) {
 				$ret = $("#preRender").html();
 				$("#preRender").remove();
 
+				if ($ret.match(/\[img=(.*)\](.*)\[\/img\]/g)) { $ret = $main.previewImage(mainArea, $ret, $main, false); }
+				if ($ret.match(/\[img\](.*)\[\/img\]/g)) { $ret = $main.previewImage(mainArea, $ret, $main, true); }
+
 				return $ret;
 			},
 
-			previewLink: function (mainArea, $preVal, enclosed) {
+			previewLink: function (mainArea, $preVal, $main, enclosed) {
 				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach, $content;
 				if (enclosed) {
 					$splitter		= $preVal.split(/(.*)\[url=("(.*)")\](.*)\[\/url\](.*)/g);
@@ -355,10 +368,13 @@ if (jQuery) {
 				$ret = $("#preRender").html();
 				$("#preRender").remove();
 
+				if ($ret.match(/\[url=("(.*)")\](.*)\[\/url\]/g)) { $ret = $main.previewLink(mainArea, $ret, $main, true); }
+				if ($ret.match(/\[url=(.*)\](.*)\[\/url\]/g)) { $ret = $main.previewLink(mainArea, $ret, $main, false); }
+
 				return $ret;
 			},
 
-			previewColor: function(mainArea, $preVal, enclosed) {
+			previewColor: function(mainArea, $preVal, $main, enclosed) {
 				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach, $content;
 				if (enclosed) {
 					$splitter		= $preVal.split(/(.*)\[COLOR=("([a-zA-Z0-9\#]+)")\](.*)\[\/COLOR\](.*)/g);
@@ -382,6 +398,9 @@ if (jQuery) {
 				$ret = $("#preRender").html();
 				$("#preRender").remove();
 
+				if ($ret.match(/\[COLOR=("([a-zA-Z0-9\#]+)")\](.*)\[\/COLOR\]/g)) { $ret = $main.previewColor(mainArea, $ret, $main, true); }
+				if ($ret.match(/\[color=([a-zA-Z0-9\#]+)\](.*)\[\/color\]/g)) { $ret = $main.previewColor(mainArea, $ret, $main, false); }
+
 				return $ret;
 			},
 
@@ -404,37 +423,37 @@ if (jQuery) {
 					//hard line replace
 					$preVal		= $preVal.replace(/\[hr\]\[\/hr\]/g, "<hr />");
 
-					//bold replace
-					if ($preVal.match(/\[b\](.*)\[\/b\]/g)) { $preVal = $main.previewBold("preview_" + mainID, $preVal); }
-
 					//list replacement
 					$preVal		= $preVal.replace(/\[list\]/g, "<ul>");
 					$preVal		= $preVal.replace(/\[\/list\]/g, "</ul>");
 					$preVal		= $preVal.replace(/\[\*\](.*)\n/g, "<li>$1</li>");
 
+					//bold replace
+					if ($preVal.match(/\[b\](.*)\[\/b\]/g)) { $preVal = $main.previewBold("preview_" + mainID, $preVal, $main); }
+
 					//replace italics
-					if ($preVal.match(/\[i\](.*)\[\/i\]/g)) { $preVal = $main.previewItalic("preview_" + mainID, $preVal); }
+					if ($preVal.match(/\[i\](.*)\[\/i\]/g)) { $preVal = $main.previewItalic("preview_" + mainID, $preVal, $main); }
 
 					//replace underline
-					if ($preVal.match(/\[u\](.*)\[\/u\]/g)) { $preVal = $main.previewUnderline("preview_" + mainID, $preVal); }
+					if ($preVal.match(/\[u\](.*)\[\/u\]/g)) { $preVal = $main.previewUnderline("preview_" + mainID, $preVal, $main); }
 
 					//replace headers
-					if ($preVal.match(/\[h([0-9]+)\](.*)\[\/h([0-9]+)\]/g)) { $preVal = $main.previewHeader("preview_" + mainID, $preVal); }
+					if ($preVal.match(/\[h([0-9]+)\](.*)\[\/h([0-9]+)\]/g)) { $preVal = $main.previewHeader("preview_" + mainID, $preVal, $main); }
 
 					//replace youtube
-					if ($preVal.match(/\[youtube\]([a-zA-Z0-9]+)\[\/youtube\]/g)) { $preVal = $main.previewYouTube("preview_" + mainID, $preVal); }
+					if ($preVal.match(/\[youtube\]([a-zA-Z0-9]+)\[\/youtube\]/g)) { $preVal = $main.previewYouTube("preview_" + mainID, $preVal, $main); }
 
 					//image replace
-					if ($preVal.match(/\[img=(.*)\](.*)\[\/img\]/g)) { $preVal = $main.previewImage("preview_" + mainID, $preVal, false); }
-					if ($preVal.match(/\[img\](.*)\[\/img\]/g)) { $preVal = $main.previewImage("preview_" + mainID, $preVal, true); }
+					if ($preVal.match(/\[img=(.*)\](.*)\[\/img\]/g)) { $preVal = $main.previewImage("preview_" + mainID, $preVal, $main, false); }
+					if ($preVal.match(/\[img\](.*)\[\/img\]/g)) { $preVal = $main.previewImage("preview_" + mainID, $preVal, $main, true); }
 
 					//link replace
-					if ($preVal.match(/\[url=("(.*)")\](.*)\[\/url\]/g)) { $preVal = $main.previewLink("preview_" + mainID, $preVal, true); }
-					if ($preVal.match(/\[url=(.*)\](.*)\[\/url\]/g)) { $preVal = $main.previewLink("preview_" + mainID, $preVal, false); }
+					if ($preVal.match(/\[url=("(.*)")\](.*)\[\/url\]/g)) { $preVal = $main.previewLink("preview_" + mainID, $preVal, $main, true); }
+					if ($preVal.match(/\[url=(.*)\](.*)\[\/url\]/g)) { $preVal = $main.previewLink("preview_" + mainID, $preVal, $main, false); }
 
 					//color replace
-					if ($preVal.match(/\[COLOR=("([a-zA-Z0-9\#]+)")\](.*)\[\/COLOR\]/g)) { $preVal = $main.previewColor("preview_" + mainID, $preVal, true); }
-					if ($preVal.match(/\[color=([a-zA-Z0-9\#]+)\](.*)\[\/color\]/g)) { $preVal = $main.previewColor("preview_" + mainID, $preVal, false); }
+					if ($preVal.match(/\[COLOR=("([a-zA-Z0-9\#]+)")\](.*)\[\/COLOR\]/g)) { $preVal = $main.previewColor("preview_" + mainID, $preVal, $main, true); }
+					if ($preVal.match(/\[color=([a-zA-Z0-9\#]+)\](.*)\[\/color\]/g)) { $preVal = $main.previewColor("preview_" + mainID, $preVal, $main, false); }
 
 					//actually insert the new content
 					$preview = $("#preview_" + mainID);
