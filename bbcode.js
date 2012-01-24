@@ -64,7 +64,7 @@ if (jQuery) {
 			},
 
 			makeButtons: function ($mainID, $main, $bbCode, settings) {
-				var $ret, singleLine;
+				var $ret, singleLine, $bbCodeID, $parentID;
 				
 				//if singleline
 				if (settings.singleLine) { singleLine = true; }
@@ -75,7 +75,6 @@ if (jQuery) {
 					$main.doTag("b", "b", $mainID);
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
-				$(".bbCodeButton").each(function (i) { $(this).not(".ui-button").unbind().remove(); });
 
 				//italic
 				$bbCode.append("<span class=\"bbCodeButton sprite_text_italic\" id=\"italic" + $mainID + "\">Italic</span>");
@@ -83,7 +82,6 @@ if (jQuery) {
 					$main.doTag("i", "i", $mainID);
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
-				$(".bbCodeButton").each(function (i) { $(this).not(".ui-button").unbind().remove(); });
 
 				//underline
 				$bbCode.append("<span class=\"bbCodeButton sprite_text_underline\" id=\"underline" + $mainID + "\">Underline</span>");
@@ -91,7 +89,6 @@ if (jQuery) {
 					$main.doTag("u", "u", $mainID);
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
-				$(".bbCodeButton").each(function (i) { $(this).not(".ui-button").unbind().remove(); });
 
 				$bbCode.append("<span class=\"bbCodeButton sprite_style\" id=\"colorBB" + $mainID + "\">Color</span>");
 				$("#colorBB" + $mainID).button({text: false, icons: {primary: "colorBB"}}).click(function () {
@@ -99,7 +96,6 @@ if (jQuery) {
 					if ($ret) { $main.doTag("color=#" + $ret, "color", $mainID); }
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
-				$(".bbCodeButton").each(function (i) { $(this).not(".ui-button").unbind().remove(); });
 
 				//link
 				$bbCode.append("<span class=\"bbCodeButton sprite_link\" id=\"linkBB" + $mainID + "\">Link</span>");
@@ -108,7 +104,6 @@ if (jQuery) {
 					if ($ret) { $main.doTag("url=" + $ret, "url", $mainID); }
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
-				$(".bbCodeButton").each(function (i) { $(this).not(".ui-button").unbind().remove(); });
 
 				//image
 				$bbCode.append("<span class=\"bbCodeButton sprite_picture\" id=\"imageBB" + $mainID + "\">Image</span>");
@@ -117,7 +112,6 @@ if (jQuery) {
 					if ($ret) {	$main.doTag("img=" + $ret, "img", $mainID); }
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
-				$(".bbCodeButton").each(function (i) { $(this).not(".ui-button").unbind().remove(); });
 
 				//youtube
 				$bbCode.append("<span class=\"bbCodeButton sprite_video\" id=\"videoBB" + $mainID + "\">Youtube</span>");
@@ -126,7 +120,6 @@ if (jQuery) {
 					$main.doMiddle("youtube", $ret, $mainID);
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
-				$(".bbCodeButton").each(function (i) { $(this).not(".ui-button").unbind().remove(); });
 
 				//List
 				$bbCode.append("<span class=\"bbCodeButton sprite_text_list_bullets\" id=\"listBB" + $mainID + "\">List</span>");
@@ -134,7 +127,6 @@ if (jQuery) {
 					$main.doList($mainID);
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
-				$(".bbCodeButton").each(function (i) { $(this).not(".ui-button").unbind().remove(); });
 
 				//break
 				if (!singleLine) { $bbCode.append("<br />"); }
@@ -145,7 +137,6 @@ if (jQuery) {
 					$main.doTag("hr", "hr", $mainID);
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
-				$(".bbCodeButton").each(function (i) { $(this).not(".ui-button").unbind().remove(); });
 
 				//headings
 				$bbCode.append("<span class=\"bbCodeButton sprite_text_heading_1\" id=\"h1BB" + $mainID + "\">H1</span>");
@@ -179,7 +170,15 @@ if (jQuery) {
 					$main.doTag("h6", "h6", $mainID);
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
-				$(".bbCodeButton").each(function (i) { $(this).not(".ui-button").unbind().remove(); });
+				
+				//remove extras that sometimes happen
+				$bbCodeID = $bbCode.attr("id");
+				$(".bbCodeButton").each(function (i) { 
+					$parentID = $(this).parent().attr("id");
+					if ($bbCodeID == $parentID) {
+						$(this).not(".ui-button").unbind().remove(); 
+					}
+				});
 			},
 
 			triggerChange: function ($main, mainID, preview) {
