@@ -203,29 +203,29 @@ if (jQuery) {
 			},
 
 			doPreRender: function (mainArea) {
-				var preRender, preAttach;
+				var preRender, preAttach, randNum;
 
+				randNum 		= Math.random();
 				preRender		= document.createElement("div");
-				preRender.id	= "preRender";
+				preRender.id	= "preRender" + randNum;
 				preAttach		= document.getElementById(mainArea);
 				preAttach.appendChild(preRender);
+
+				return randNum;
 			},
 
 			previewBold: function (mainArea, $preVal, $main) {
-				var $splitter, $preContent, $preElement, $postContent, $ret;
+				var $splitter, $preContent, $preElement, $postContent, $ret, randNum;
 				$splitter		= $preVal.split(/(.*)\[b\](.*)\[\/b\](.*)/g);
 				$preContent		= $splitter[1];
 				$preElement		= $splitter[2];
 				$postContent	= $splitter[3];
 
-				preRender		= document.createElement("div");
-				preRender.id	= "preRender";
-				preAttach		= document.getElementById(mainArea);
-				preAttach.appendChild(preRender);
+				randNum 		= $main.doPreRender(mainArea);
 
-				$("#preRender").html($preContent + "<strong>" + $preElement + "</strong>" + $postContent);
-				$ret = $("#preRender").html();
-				$("#preRender").remove();
+				$("#preRender" + randNum).html($preContent + "<strong>" + $preElement + "</strong>" + $postContent);
+				$ret = $("#preRender" + randNum).html();
+				$("#preRender" + randNum).remove();
 
 				if ($ret.match(/\[b\](.*)\[\/b\]/g)) { $ret = $main.previewBold(mainArea, $ret, $main); }
 
@@ -233,17 +233,17 @@ if (jQuery) {
 			},
 
 			previewItalic: function (mainArea, $preVal, $main) {
-				var $splitter, $preContent, $preElement, $postContent, $ret;
+				var $splitter, $preContent, $preElement, $postContent, $ret, randNum;
 				$splitter		= $preVal.split(/(.*)\[i\](.*)\[\/i\](.*)/g);
 				$preContent		= $splitter[1];
 				$preElement		= $splitter[2];
 				$postContent	= $splitter[3];
 
-				$main.doPreRender(mainArea);
+				randNum			= $main.doPreRender(mainArea);
 
-				$("#preRender").html($preContent + "<em>" + $preElement + "</em>" + $postContent);
-				$ret = $("#preRender").html();
-				$("#preRender").remove();
+				$("#preRender" + randNum).html($preContent + "<em>" + $preElement + "</em>" + $postContent);
+				$ret = $("#preRender" + randNum).html();
+				$("#preRender" + randNum).remove();
 
 				if ($ret.match(/\[i\](.*)\[\/i\]/g)) { $ret = $main.previewItalic(mainArea, $ret, $main); }
 
@@ -251,17 +251,17 @@ if (jQuery) {
 			},
 
 			previewUnderline: function (mainArea, $preVal, $main) {
-				var $splitter, $preContent, $preElement, $postContent, $ret;
+				var $splitter, $preContent, $preElement, $postContent, $ret, randNum;
 				$splitter		= $preVal.split(/(.*)\[u\](.*)\[\/u\](.*)/g);
 				$preContent		= $splitter[1];
 				$preElement		= $splitter[2];
 				$postContent	= $splitter[3];
 
-				$main.doPreRender(mainArea);
+				randNum			= $main.doPreRender(mainArea);
 
-				$("#preRender").html($preContent + "<span style=\"border-bottom: 1px dotted\">" + $preElement + "</span>" + $postContent);
-				$ret = $("#preRender").html();
-				$("#preRender").remove();
+				$("#preRender" + randNum).html($preContent + "<span style=\"border-bottom: 1px dotted\">" + $preElement + "</span>" + $postContent);
+				$ret = $("#preRender" + randNum).html();
+				$("#preRender" + randNum).remove();
 
 				if ($ret.match(/\[u\](.*)\[\/u\]/g)) { $ret = $main.previewUnderline(mainArea, $ret, $main); }
 
@@ -269,18 +269,18 @@ if (jQuery) {
 			},
 
 			previewHeader: function (mainArea, $preVal, $main) {
-				var $splitter, $preContent, $preElement, $postContent, $ret, $hLevel;
+				var $splitter, $preContent, $preElement, $postContent, $ret, $hLevel, randNum;
 				$splitter		= $preVal.split(/(.*)\[h([0-9]+)\](.*)\[\/h([0-9]+)\](.*)/g);
 				$preContent		= $splitter[1];
 				$hLevel			= $splitter[2];
 				$preElement		= $splitter[3];
 				$postContent	= $splitter[4];
 
-				$main.doPreRender(mainArea);
+				randNum			= $main.doPreRender(mainArea);
 
-				$("#preRender").html($preContent + "<h" + $hLevel + ">" + $preElement + "</h" + $hLevel + ">" + $postContent);
-				$ret			= $("#preRender").html();
-				$("#preRender").remove();
+				$("#preRender" + randNum).html($preContent + "<h" + $hLevel + ">" + $preElement + "</h" + $hLevel + ">" + $postContent);
+				$ret = $("#preRender" + randNum).html();
+				$("#preRender" + randNum).remove();
 
 				if ($ret.match(/\[h([0-9]+)\](.*)\[\/h([0-9]+)\]/g)) { $ret = $main.previewHeader(mainArea, $ret, $main); }
 
@@ -288,17 +288,17 @@ if (jQuery) {
 			},
 
 			previewYouTube: function (mainArea, $preVal, $main) {
-				var $splitter, $preContent, $preElement, $postContent, $ret;
+				var $splitter, $preContent, $preElement, $postContent, $ret, randNum;
 				$splitter		= $preVal.split(/(.*)\[youtube\]([a-zA-Z0-9]+)\[\/youtube\](.*)/g);
 				$preContent		= $splitter[1];
 				$preElement		= $splitter[2];
 				$postContent	= $splitter[3];
 
-				$main.doPreRender(mainArea);
+				randNum			= $main.doPreRender(mainArea);
 
-				$("#preRender").html($preContent + "<iframe width='120' height='120' src='http://www.youtube/com/embed/" + $preElement + "?theme=light&color=red' frameborder='0' allowfullscreen></iframe>" + $postContent);
-				$ret = $("#preRender").html();
-				$("#preRender").remove();
+				$("#preRender" + randNum).html($preContent + "<iframe width='120' height='120' src='http://www.youtube/com/embed/" + $preElement + "?theme=light&color=red' frameborder='0' allowfullscreen></iframe>" + $postContent);
+				$ret = $("#preRender" + randNum).html();
+				$("#preRender" + randNum).remove();
 
 				if ($ret.match(/\[youtube\]([a-zA-Z0-9]+)\[\/youtube\]/g)) { $ret = $main.previewYouTube(mainArea, $ret, $main); }
 
@@ -306,7 +306,7 @@ if (jQuery) {
 			},
 
 			previewImage: function (mainArea, $preVal, $main, noCaption) {
-				var $splitter, $preContent, $preElement, $postContent, $ret, $caption, $madeContent;
+				var $splitter, $preContent, $preElement, $postContent, $ret, $caption, $madeContent, randNum;
 				if (noCaption) {
 					$splitter	= $preVal.split(/(.*)\[img\](.*)\[\/img\](.*)/g);
 				} else {
@@ -322,16 +322,16 @@ if (jQuery) {
 					$postContent = $splitter[3];
 				}
 
-				$main.doPreRender(mainArea);
+				randNum			= $main.doPreRender(mainArea);
 
 				if ($caption) {
 					$madeContent	= $preContent + "<img src='" + $preElement + "' title='" + $caption + "' /><caption>" + $caption + "</caption>" + $postContent;
 				} else {
 					$madeContent	= $preContent + "<img src='" + $preElement + "' />" + $postContent;
 				}
-				$("#preRender").html($madeContent);
-				$ret = $("#preRender").html();
-				$("#preRender").remove();
+				$("#preRender" + randNum).html($madeContent);
+				$ret = $("#preRender" + randNum).html();
+				$("#preRender" + randNum).remove();
 
 				if ($ret.match(/\[img=(.*)\](.*)\[\/img\]/g)) { $ret = $main.previewImage(mainArea, $ret, $main, false); }
 				if ($ret.match(/\[img\](.*)\[\/img\]/g)) { $ret = $main.previewImage(mainArea, $ret, $main, true); }
@@ -340,7 +340,7 @@ if (jQuery) {
 			},
 
 			previewLink: function (mainArea, $preVal, $main, enclosed) {
-				var $splitter, $preContent, $preElement, $postContent, $ret, $content;
+				var $splitter, $preContent, $preElement, $postContent, $ret, $content, randNum;
 				if (enclosed) {
 					$splitter		= $preVal.split(/(.*)\[url=("(.*)")\](.*)\[\/url\](.*)/g);
 					$preElement		= $splitter[3];
@@ -354,11 +354,11 @@ if (jQuery) {
 				}
 				$preContent			= $splitter[1];
 
-				$main.doPreRender(mainArea);
+				randNum			= $main.doPreRender(mainArea);
 
-				$("#preRender").html($preContent + "<a href='" + $preElement + "' title='" + $content + "'>" + $content + "</a>" + $postContent);
-				$ret = $("#preRender").html();
-				$("#preRender").remove();
+				$("#preRender" + randNum).html($preContent + "<a href='" + $preElement + "' title='" + $content + "'>" + $content + "</a>" + $postContent);
+				$ret = $("#preRender" + randNum).html();
+				$("#preRender" + randNum).remove();
 
 				if ($ret.match(/\[url=("(.*)")\](.*)\[\/url\]/g)) { $ret = $main.previewLink(mainArea, $ret, $main, true); }
 				if ($ret.match(/\[url=(.*)\](.*)\[\/url\]/g)) { $ret = $main.previewLink(mainArea, $ret, $main, false); }
@@ -367,7 +367,7 @@ if (jQuery) {
 			},
 
 			previewColor: function (mainArea, $preVal, $main, enclosed) {
-				var $splitter, $preContent, $preElement, $postContent, $ret, $content;
+				var $splitter, $preContent, $preElement, $postContent, $ret, $content, randNum;
 				if (enclosed) {
 					$splitter		= $preVal.split(/(.*)\[COLOR=("([a-zA-Z0-9\#]+)")\](.*)\[\/COLOR\](.*)/g);
 					$preElement		= $splitter[3];
@@ -381,11 +381,11 @@ if (jQuery) {
 				}
 				$preContent			= $splitter[1];
 
-				$main.doPreRender(mainArea);
+				randNum			= $main.doPreRender(mainArea);
 
-				$("#preRender").html($preContent + "<font color='" + $preElement + "'>" + $content + "</font>" + $postContent);
-				$ret = $("#preRender").html();
-				$("#preRender").remove();
+				$("#preRender" + randNum).html($preContent + "<font color='" + $preElement + "'>" + $content + "</font>" + $postContent);
+				$ret = $("#preRender" + randNum).html();
+				$("#preRender" + randNum).remove();
 
 				if ($ret.match(/\[COLOR=("([a-zA-Z0-9\#]+)")\](.*)\[\/COLOR\]/g)) { $ret = $main.previewColor(mainArea, $ret, $main, true); }
 				if ($ret.match(/\[color=([a-zA-Z0-9\#]+)\](.*)\[\/color\]/g)) { $ret = $main.previewColor(mainArea, $ret, $main, false); }
@@ -394,7 +394,7 @@ if (jQuery) {
 			},
 
 			previewList: function (mainArea, $preVal, $main) {
-				var $splitter, $preContent, $preElement, $postContent, $ret;
+				var $splitter, $preContent, $preElement, $postContent, $ret, randNum;
 				$splitter		= $preVal.split(/(.*)\[list\](.*)\[\/list\](.*)/g);
 				$preContent		= $splitter[1];
 				$preElement		= $splitter[2];
@@ -402,32 +402,32 @@ if (jQuery) {
 
 				if ($preElement.match(/\[\*\](.*)/g)) { $preElement = $main.previewListItem(mainArea, $preElement, $main); }
 
-				$main.doPreRender(mainArea);
+				randNum			= $main.doPreRender(mainArea);
 
-				$("#preRender").html($preContent + "<ul>" + $preElement + "</ul>" + $postContent);
-				$ret	= $("#preRender").html();
-				$("#preRender").remove();
+				$("#preRender" + randNum).html($preContent + "<ul>" + $preElement + "</ul>" + $postContent);
+				$ret	= $("#preRender" + randNum).html();
+				$("#preRender" + randNum).remove();
 
 				if ($ret.match(/\[list\](.*)\[\/list\]/g)) { $ret = $main.previewList(mainArea, $ret, $main); }
 
 				return $ret;
 			},
 			previewListItem: function (mainArea, $preVal, $main) {
-				var $splitter, $preContent, $preElement, $postContent, $ret;
+				var $splitter, $preContent, $preElement, $postContent, $ret, randNum;
 				$splitter		= $preVal.split(/(.*)\[\*\](.*)<br>(.*)/g);
 				$preContent		= $splitter[1];
 				$preElement		= $splitter[2];
 				$postContent	= $splitter[3];
 
-				$main.doPreRender(mainArea);
+				randNum			= $main.doPreRender(mainArea);
 
 				//remove extra breaks
 				$preElement = $preElement.replace(/<br>/g, "");
 				$preContent = $preContent.replace(/<br>/g, "");
 
-				$("#preRender").html($preContent + "<li>" + $preElement + "</li>" + $postContent);
-				$ret	= $("#preRender").html();
-				$("#preRender").remove();
+				$("#preRender" + randNum).html($preContent + "<li>" + $preElement + "</li>" + $postContent);
+				$ret	= $("#preRender" + randNum).html();
+				$("#preRender" + randNum).remove();
 
 				if ($ret.match(/\[\*\](.*)<br>/g)) { $ret = $main.previewListItem(mainArea, $ret, $main); }
 
@@ -435,7 +435,7 @@ if (jQuery) {
 			},
 
 			previewQuote: function (mainArea, $preVal, $main, uppercase) {
-				var $splitter, $preContent, $preElement, $postContent, $ret;
+				var $splitter, $preContent, $preElement, $postContent, $ret, randNum;
 				if (uppercase) {
 					$splitter		= $preVal.split(/(.*)\[QUOTE\](.*)\[\/QUOTE\](.*)/g);
 				} else {
@@ -446,11 +446,11 @@ if (jQuery) {
 				$preElement		= $splitter[2];
 				$postContent	= $splitter[3];
 
-				$main.doPreRender(mainArea);
+				randNum			= $main.doPreRender(mainArea);
 
-				$("#preRender").html($preContent + "<blockquote>" + $preElement + "</blockquote>" + $postContent);
-				$ret = $("#preRender").html();
-				$("#preRender").remove();
+				$("#preRender" + randNum).html($preContent + "<blockquote>" + $preElement + "</blockquote>" + $postContent);
+				$ret = $("#preRender" + randNum).html();
+				$("#preRender" + randNum).remove();
 
 				if ($ret.match(/\[quote\](.*)\[\/quote\]/g)) { $ret = $main.previewQuote(previewID, $ret, $main, false); }
 				if ($ret.match(/\[QUOTE\](.*)\[\/QUOTE\]/g)) { $ret = $main.previewQuote(previewID, $ret, $main, true); }
@@ -459,7 +459,7 @@ if (jQuery) {
 			},
 
 			previewTable: function (mainArea, $preVal, $main, uppercase) {
-				var $splitter, $preContent, $preElement, $postContent, $ret;
+				var $splitter, $preContent, $preElement, $postContent, $ret, randNum;
 				if (uppercase) {
 					$splitter 	= $preVal.split(/(.*)\[TABLE\](.*)\[\/TABLE\](.*)/g);
 				} else {
@@ -469,7 +469,7 @@ if (jQuery) {
 				$preElement		= $splitter[2];
 				$postContent	= $splitter[3];
 
-				$main.doPreRender(mainArea);
+				randNum			= $main.doPreRender(mainArea);
 
 				//table row
 				if ($preElement.match(/\[tr\](.*)\[\/tr\]/g)) { $preElement = $main.previewTableRow(mainArea, $preElement, $main, false); }
@@ -483,9 +483,9 @@ if (jQuery) {
 				if ($preElement.match(/\[td\](.*)\[\/td\]/g)) { $preElement = $main.previewTableCell(mainArea, $preElement, $main, false); }
 				if ($preElement.match(/\[TD\](.*)\[\/TD\]/g)) { $preElement = $main.previewTableCell(mainArea, $preElement, $main, true); }
 
-				$("#preRender").html($preContent + "<table>" + $preElement + "</table>" + $postContent);
-				$ret = $("#preRender").html();
-				$("#preRender").remove();
+				$("#preRender" + randNum).html($preContent + "<table>" + $preElement + "</table>" + $postContent);
+				$ret = $("#preRender" + randNum).html();
+				$("#preRender" + randNum).remove();
 
 				//loop to do extra ones
 				if ($ret.match(/\[table\](.*)\[\/table\]/g)) { $ret = $main.previewTable(mainArea, $ret, $main, false); }
@@ -494,7 +494,7 @@ if (jQuery) {
 				return $ret;
 			},
 			previewTableRow: function (mainArea, $preVal, $main, uppercase) {
-				var $splitter, $preContent, $preElement, $postContent, $ret;
+				var $splitter, $preContent, $preElement, $postContent, $ret, randNum;
 				if (uppercase) {
 					$splitter	= $preVal.split(/(.*)\[TR\](.*)\[\/TR\](.*)/g);
 				} else {
@@ -504,12 +504,12 @@ if (jQuery) {
 				$preElement		= $splitter[2];
 				$postContent	= $splitter[3];
 
-				$main.doPreRender(mainArea);
+				randNum			= $main.doPreRender(mainArea);
 				$preElement = $preElement.replace(/<br>/g, "");
 
-				$("#preRender").html($preContent + "<tr>" + $preElement + "</tr>" + $postContent);
-				$ret = $("#preRender").html();
-				$("#preRender").remove();
+				$("#preRender" + randNum).html($preContent + "<tr>" + $preElement + "</tr>" + $postContent);
+				$ret = $("#preRender" + randNum).html();
+				$("#preRender" + randNum).remove();
 
 				if ($ret.match(/\[tr\](.*)\[\/tr\]/g)) { $ret = $main.previewTableRow(mainArea, $ret, $main, false); }
 				if ($ret.match(/\[TR\](.*)\[\/TR\]/g)) { $ret = $main.previewTableRow(mainArea, $ret, $main, true); }
@@ -517,7 +517,7 @@ if (jQuery) {
 				return $ret;
 			},
 			previewTableHead: function (mainArea, $preVal, $main, uppercase) {
-				var $splitter, $preContent, $preElement, $postContent, $ret;
+				var $splitter, $preContent, $preElement, $postContent, $ret, randNum;
 				if (uppercase) {
 					$splitter	= $preVal.split(/(.*)\[TH\](.*)\[\/TH\](.*)/g);
 				} else {
@@ -527,12 +527,12 @@ if (jQuery) {
 				$preElement		= $splitter[2];
 				$postContent	= $splitter[3];
 
-				$main.doPreRender(mainArea);
+				randNum			= $main.doPreRender(mainArea);
 				$preElement	= $preElement.replace(/<br>/g, "");
 
-				$("#preRender").html($preContent + "<th>" + $preElement + "</th>" + $postContent);
-				$ret = $("#preRender").html();
-				$("#preRender").remove();
+				$("#preRender" + randNum).html($preContent + "<th>" + $preElement + "</th>" + $postContent);
+				$ret = $("#preRender" + randNum).html();
+				$("#preRender" + randNum).remove();
 
 				if ($ret.match(/\[th\](.*)\[\/th\]/g)) { $ret = $main.previewTableHead(mainArea, $ret, $main, false); }
 				if ($ret.match(/\[TH\](.*)\[\/TH\]/g)) { $ret = $main.previewTableHead(mainArea, $ret, $main, true); }
@@ -540,7 +540,7 @@ if (jQuery) {
 				return $ret;
 			},
 			previewTableCell: function (mainArea, $preVal, $main, uppercase) {
-				var $splitter, $preContent, $preElement, $postContent, $ret;
+				var $splitter, $preContent, $preElement, $postContent, $ret, randNum;
 				if (uppercase) {
 					$splitter	= $preVal.split(/(.*)\[TD\](.*)\[\/TD\](.*)/g);
 				} else {
@@ -550,12 +550,12 @@ if (jQuery) {
 				$preElement		= $splitter[2];
 				$postContent	= $splitter[3];
 
-				$main.doPreRender();
+				randNum			= $main.doPreRender(mainArea);
 				$preElement	= $preElement.replace(/<br>/g, "");
 
-				$("#preRender").html($preContent + "<td>" + $preElement + "</td>" + $postContent);
-				$ret = $("#preRender").html();
-				$("#preRender").remove();
+				$("#preRender" + randNum).html($preContent + "<td>" + $preElement + "</td>" + $postContent);
+				$ret = $("#preRender" + randNum).html();
+				$("#preRender" + randNum).remove();
 
 				if ($ret.match(/\[td\](.*)\[\/td\]/g)) { $ret = $main.previewTableCell(mainArea, $ret, $main, false); }
 				if ($ret.match(/\[TD\](.*)\[\/TD\]/g)) { $ret = $main.previewTableCell(mainArea, $ret, $main, true); }
