@@ -67,7 +67,7 @@ if (jQuery) {
 				var $ret, singleLine;
 				
 				//if singleline
-				if (settings.singeLine) { singleLine = true; }
+				if (settings.singleLine) { singleLine = true; }
 
 				//bold
 				$bbCode.append("<span class=\"bbCodeButton sprite_text_bold\" id=\"bold" + $mainID + "\">Bold</span>");
