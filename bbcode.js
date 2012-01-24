@@ -496,9 +496,9 @@ if (jQuery) {
 			previewTableRow: function (mainArea, $preVal, $main, uppercase) {
 				var $splitter, $preContent, $preElement, $postContent, $ret;
 				if (uppercase) {
-					$splitter	= $preVal.split(/(.*)\[TR\](.*)\[\/TR\](.*)/g
+					$splitter	= $preVal.split(/(.*)\[TR\](.*)\[\/TR\](.*)/g);
 				} else {
-					$splitter	= $preVal.split(/(.*)\[tr\](.*)\[\/tr\](.*)/g
+					$splitter	= $preVal.split(/(.*)\[tr\](.*)\[\/tr\](.*)/g);
 				}
 				$preContent		= $splitter[1];
 				$preElement		= $splitter[2];
