@@ -64,7 +64,10 @@ if (jQuery) {
 			},
 
 			makeButtons: function ($mainID, $main, $bbCode, settings) {
-				var $ret;
+				var $ret, singleLine;
+				
+				//if singleline
+				if (settings.singeLine) { singleLine = true; }
 
 				//bold
 				$bbCode.append("<span class=\"bbCodeButton sprite_text_bold\" id=\"bold" + $mainID + "\">Bold</span>");
@@ -134,7 +137,7 @@ if (jQuery) {
 				$(".bbCodeButton").each(function (i) { $(this).not(".ui-button").unbind().remove(); });
 
 				//break
-				$bbCode.append("<br />");
+				if (!singleLine) { $bbCode.append("<br />"); }
 
 				//hr
 				$bbCode.append("<span class=\"bbCodeButton sprite_text_horizontalrule\" id=\"hrBB" + $mainID + "\">HR</span>");
