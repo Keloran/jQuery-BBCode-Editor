@@ -488,8 +488,8 @@ if (jQuery) {
 				$("#preRender").remove();
 
 				//loop to do extra ones
-				if ($ret.match(/\[table\](.*)\[\/table\]/g) { $ret = $main.previewTable(mainArea, $ret, $main, false); }
-				if ($ret.match(/\[TABLE\](.*)\[\/TABLE\]/g) { $ret = $main.previewTable(mainArea, $ret, $main, true); }
+				if ($ret.match(/\[table\](.*)\[\/table\]/g)) { $ret = $main.previewTable(mainArea, $ret, $main, false); }
+				if ($ret.match(/\[TABLE\](.*)\[\/TABLE\]/g)) { $ret = $main.previewTable(mainArea, $ret, $main, true); }
 
 				return $ret;
 			},
