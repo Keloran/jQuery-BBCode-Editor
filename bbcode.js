@@ -411,7 +411,7 @@ if (jQuery) {
 				$preElement		= $splitter[2];
 				$postContent	= $splitter[3];
 
-				if ($preElement.match(/\[\*\](.*)<br>/g)) { $preElement = $main.previewListItem(mainArea, $preElement, $main); }
+				if ($preElement.match(/\[\*\](.*)/g)) { $preElement = $main.previewListItem(mainArea, $preElement, $main); }
 
 				preRender		= document.createElement("div");
 				preRender.id	= "preRender";
@@ -422,7 +422,7 @@ if (jQuery) {
 				$ret	= $("#preRender").html();
 				$("#preRender").remove();
 
-				if ($ret.match(/\[list\]<br>(.*)\[\/list\]/g)) { $ret = $main.previewList(mainArea, $ret, $main); }
+				if ($ret.match(/\[list\](.*)\[\/list\]/g)) { $ret = $main.previewList(mainArea, $ret, $main); }
 
 				return $ret;
 			},
@@ -439,7 +439,10 @@ if (jQuery) {
 				preAttach		= document.getElementById(mainArea);
 				preAttach.appendChild(preRender);
 
-				$preElement.replace(/<br>/g, "");
+				//remove extra breaks
+				$preElement = $preElement.replace(/<br>/g, "");
+				$preContent = $preContent.replace(/<br>/g, "");
+
 				$("#preRender").html($preContent + "<li>" + $preElement + "</li>" + $postContent);
 				$ret	= $("#preRender").html();
 				$("#preRender").remove();
@@ -470,7 +473,7 @@ if (jQuery) {
 					$preVal		= $preVal.replace(/\[hr\]\[\/hr\]/g, "<hr>");
 
 					//list replacement
-					if ($preVal.match(/\[list\](.*)\[\/list\]/g)) { $main.previewList("preview_" + mainID, $preVal, $main); }
+					if ($preVal.match(/\[list\](.*)\[\/list\]/g)) { $preVal = $main.previewList("preview_" + mainID, $preVal, $main); }
 
 					//bold replace
 					if ($preVal.match(/\[b\](.*)\[\/b\]/g)) { $preVal = $main.previewBold("preview_" + mainID, $preVal, $main); }
