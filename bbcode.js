@@ -277,7 +277,7 @@ if (jQuery) {
 				$preContent		= $splitter[1];
 				$hLevel			= $splitter[2];
 				$preElement		= $splitter[3];
-				$postContent	= $splitter[4];
+				$postContent	= $splitter[5];
 
 				randNum			= $main.doPreRender(mainArea);
 
