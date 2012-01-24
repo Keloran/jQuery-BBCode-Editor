@@ -31,13 +31,6 @@ if (jQuery) {
 					$bbCode.append("<div id=\"bbCounter_" + $mainID + "\" class=\"charsLeft\"></div>");
 				}
 
-				//size the buttons that are left
-				$("button").css({
-					width: "16px",
-					height: "16px",
-					"min-width": "16px"
-				});
-
 				//make the preview area if its turned on
 				if (settings.preview) { $main.makePreview($mainID); }
 
@@ -185,6 +178,15 @@ if (jQuery) {
 				$main.fixReplication(mainID);
 
 				if (preview) { $main.updatePreview(mainID, $main); }
+			},
+			
+			fixSize: function () {
+				//size the buttons that are left
+				$("button").css({
+					width: "16px",
+					height: "16px",
+					"min-width": "16px"
+				});
 			},
 
 			fixReplication: function (mainID) {
