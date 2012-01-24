@@ -63,9 +63,8 @@ if (jQuery) {
 				$("#" + mainID).bbCode($backOptions);
 			},
 
-			makeButtons: function (mainID, $main, $bbCode, settings) {
-				var $mainID, $ret;
-				$mainID = $("#" + mainID);
+			makeButtons: function ($mainID, $main, $bbCode, settings) {
+				var $ret;
 
 				//bold
 				$bbCode.append("<span class=\"bbCodeButton sprite_text_bold\" id=\"bold" + $mainID + "\">Bold</span>");
