@@ -205,7 +205,7 @@ if (jQuery) {
 			doPreRender: function (mainArea) {
 				var preRender, preAttach, randNum;
 
-				randNum 		= Math.random();
+				randNum 		= Math.floor(Math.random() * 100);
 				preRender		= document.createElement("div");
 				preRender.id	= "preRender" + randNum;
 				preAttach		= document.getElementById(mainArea);
