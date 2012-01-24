@@ -619,8 +619,8 @@ if (jQuery) {
 					if ($preVal.match(/\[QUOTE\](.*)\[\/QUOTE\]/g)) { $preVal = $main.previewQuote(previewID, $preVal, $main, true); }
 
 					//table replace
-					if ($preVal.match(/[table\](.*)\[\/table\]/g)) { $preVal = $main.previewTable(previewID, $preVal, $main, false); }
-					if ($preVal.match(/[TABLE\](.*)\[\/TABLE\]/g)) { $preVal = $main.previewTable(previewID, $preVal, $main, true); }
+					if ($preVal.match(/\[table\](.*)\[\/table\]/g)) { $preVal = $main.previewTable(previewID, $preVal, $main, false); }
+					if ($preVal.match(/\[TABLE\](.*)\[\/TABLE\]/g)) { $preVal = $main.previewTable(previewID, $preVal, $main, true); }
 
 					//actually insert the new content
 					$preview = $("#preview_" + mainID);
