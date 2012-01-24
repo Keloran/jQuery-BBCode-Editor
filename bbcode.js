@@ -564,7 +564,7 @@ if (jQuery) {
 			},
 
 			updatePreview: function (mainID, $main) {
-				var $content, $preVal, $preview, $preElement1, $preElement2, $preElement3, $previewID;
+				var $content, $preVal, $preview, $preElement1, $preElement2, $preElement3, previewID;
 				$content		= $("#" + mainID);
 				$preVal			= $content.val();
 				$preview		= $("#preview_" + mainID);
@@ -573,7 +573,7 @@ if (jQuery) {
 				$preElement1	= false;
 				$preElement2	= false;
 				$preElement3	= false;
-				$previewID		= "preview_" + mainID;
+				previewID		= "preview_" + mainID;
 
 				//if there is actually content
 				if ($preVal) {
