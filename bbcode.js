@@ -202,8 +202,17 @@ if (jQuery) {
 				}
 			},
 
+			doPreRender: function (mainArea) {
+				var preRender, preAttach;
+
+				preRender		= document.createElement("div");
+				preRender.id	= "preRender";
+				preAttach		= document.getElementById(mainArea);
+				preAttach.appendChild(preRender);
+			},
+
 			previewBold: function (mainArea, $preVal, $main) {
-				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach;
+				var $splitter, $preContent, $preElement, $postContent, $ret;
 				$splitter		= $preVal.split(/(.*)\[b\](.*)\[\/b\](.*)/g);
 				$preContent		= $splitter[1];
 				$preElement		= $splitter[2];
@@ -224,16 +233,13 @@ if (jQuery) {
 			},
 
 			previewItalic: function (mainArea, $preVal, $main) {
-				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach;
+				var $splitter, $preContent, $preElement, $postContent, $ret;
 				$splitter		= $preVal.split(/(.*)\[i\](.*)\[\/i\](.*)/g);
 				$preContent		= $splitter[1];
 				$preElement		= $splitter[2];
 				$postContent	= $splitter[3];
 
-				preRender		= document.createElement("div");
-				preRender.id	= "preRender";
-				preAttach		= document.getElementById(mainArea);
-				preAttach.appendChild(preRender);
+				$main.doPreRender(mainArea);
 
 				$("#preRender").html($preContent + "<em>" + $preElement + "</em>" + $postContent);
 				$ret = $("#preRender").html();
@@ -245,16 +251,13 @@ if (jQuery) {
 			},
 
 			previewUnderline: function (mainArea, $preVal, $main) {
-				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach;
+				var $splitter, $preContent, $preElement, $postContent, $ret;
 				$splitter		= $preVal.split(/(.*)\[u\](.*)\[\/u\](.*)/g);
 				$preContent		= $splitter[1];
 				$preElement		= $splitter[2];
 				$postContent	= $splitter[3];
 
-				preRender		= document.createElement("div");
-				preRender.id	= "preRender";
-				preAttach		= document.getElementById(mainArea);
-				preAttach.appendChild(preRender);
+				$main.doPreRender(mainArea);
 
 				$("#preRender").html($preContent + "<span style=\"border-bottom: 1px dotted\">" + $preElement + "</span>" + $postContent);
 				$ret = $("#preRender").html();
@@ -266,17 +269,15 @@ if (jQuery) {
 			},
 
 			previewHeader: function (mainArea, $preVal, $main) {
-				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach, $hLevel;
+				var $splitter, $preContent, $preElement, $postContent, $ret, $hLevel;
 				$splitter		= $preVal.split(/(.*)\[h([0-9]+)\](.*)\[\/h([0-9]+)\](.*)/g);
 				$preContent		= $splitter[1];
 				$hLevel			= $splitter[2];
 				$preElement		= $splitter[3];
 				$postContent	= $splitter[4];
 
-				preRender		= document.createElement("div");
-				preRender.id	= "preRender";
-				preAttach		= document.getElementById(mainArea);
-				preAttach.appendChild(preRender);
+				$main.doPreRender(mainArea);
+
 				$("#preRender").html($preContent + "<h" + $hLevel + ">" + $preElement + "</h" + $hLevel + ">" + $postContent);
 				$ret			= $("#preRender").html();
 				$("#preRender").remove();
@@ -287,16 +288,13 @@ if (jQuery) {
 			},
 
 			previewYouTube: function (mainArea, $preVal, $main) {
-				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach;
+				var $splitter, $preContent, $preElement, $postContent, $ret;
 				$splitter		= $preVal.split(/(.*)\[youtube\]([a-zA-Z0-9]+)\[\/youtube\](.*)/g);
 				$preContent		= $splitter[1];
 				$preElement		= $splitter[2];
 				$postContent	= $splitter[3];
 
-				preRender		= document.createElement("div");
-				preRender.id	= "preRender";
-				preAttach		= document.getElementById(mainArea);
-				preAttach.appendChild(preRender);
+				$main.doPreRender(mainArea);
 
 				$("#preRender").html($preContent + "<iframe width='120' height='120' src='http://www.youtube/com/embed/" + $preElement + "?theme=light&color=red' frameborder='0' allowfullscreen></iframe>" + $postContent);
 				$ret = $("#preRender").html();
@@ -308,7 +306,7 @@ if (jQuery) {
 			},
 
 			previewImage: function (mainArea, $preVal, $main, noCaption) {
-				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach, $caption, $madeContent;
+				var $splitter, $preContent, $preElement, $postContent, $ret, $caption, $madeContent;
 				if (noCaption) {
 					$splitter	= $preVal.split(/(.*)\[img\](.*)\[\/img\](.*)/g);
 				} else {
@@ -324,10 +322,7 @@ if (jQuery) {
 					$postContent = $splitter[3];
 				}
 
-				preRender		= document.createElement("div");
-				preRender.id	= "preRender";
-				preAttach		= document.getElementById(mainArea);
-				preAttach.appendChild(preRender);
+				$main.doPreRender(mainArea);
 
 				if ($caption) {
 					$madeContent	= $preContent + "<img src='" + $preElement + "' title='" + $caption + "' /><caption>" + $caption + "</caption>" + $postContent;
@@ -345,7 +340,7 @@ if (jQuery) {
 			},
 
 			previewLink: function (mainArea, $preVal, $main, enclosed) {
-				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach, $content;
+				var $splitter, $preContent, $preElement, $postContent, $ret, $content;
 				if (enclosed) {
 					$splitter		= $preVal.split(/(.*)\[url=("(.*)")\](.*)\[\/url\](.*)/g);
 					$preElement		= $splitter[3];
@@ -359,10 +354,7 @@ if (jQuery) {
 				}
 				$preContent			= $splitter[1];
 
-				preRender		= document.createElement("div");
-				preRender.id	= "preRender";
-				preAttach		= document.getElementById(mainArea);
-				preAttach.appendChild(preRender);
+				$main.doPreRender(mainArea);
 
 				$("#preRender").html($preContent + "<a href='" + $preElement + "' title='" + $content + "'>" + $content + "</a>" + $postContent);
 				$ret = $("#preRender").html();
@@ -375,7 +367,7 @@ if (jQuery) {
 			},
 
 			previewColor: function (mainArea, $preVal, $main, enclosed) {
-				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach, $content;
+				var $splitter, $preContent, $preElement, $postContent, $ret, $content;
 				if (enclosed) {
 					$splitter		= $preVal.split(/(.*)\[COLOR=("([a-zA-Z0-9\#]+)")\](.*)\[\/COLOR\](.*)/g);
 					$preElement		= $splitter[3];
@@ -389,10 +381,7 @@ if (jQuery) {
 				}
 				$preContent			= $splitter[1];
 
-				preRender		= document.createElement("div");
-				preRender.id	= "preRender";
-				preAttach		= document.getElementById(mainArea);
-				preAttach.appendChild(preRender);
+				$main.doPreRender(mainArea);
 
 				$("#preRender").html($preContent + "<font color='" + $preElement + "'>" + $content + "</font>" + $postContent);
 				$ret = $("#preRender").html();
@@ -405,7 +394,7 @@ if (jQuery) {
 			},
 
 			previewList: function (mainArea, $preVal, $main) {
-				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach;
+				var $splitter, $preContent, $preElement, $postContent, $ret;
 				$splitter		= $preVal.split(/(.*)\[list\](.*)\[\/list\](.*)/g);
 				$preContent		= $splitter[1];
 				$preElement		= $splitter[2];
@@ -413,10 +402,7 @@ if (jQuery) {
 
 				if ($preElement.match(/\[\*\](.*)/g)) { $preElement = $main.previewListItem(mainArea, $preElement, $main); }
 
-				preRender		= document.createElement("div");
-				preRender.id	= "preRender";
-				preAttach		= document.getElementById(mainArea);
-				preAttach.appendChild(preRender);
+				$main.doPreRender(mainArea);
 
 				$("#preRender").html($preContent + "<ul>" + $preElement + "</ul>" + $postContent);
 				$ret	= $("#preRender").html();
@@ -426,18 +412,14 @@ if (jQuery) {
 
 				return $ret;
 			},
-
 			previewListItem: function (mainArea, $preVal, $main) {
-				var preRender, $splitter, $preContent, $preElement, $postContent, $ret, preAttach;
+				var $splitter, $preContent, $preElement, $postContent, $ret;
 				$splitter		= $preVal.split(/(.*)\[\*\](.*)<br>(.*)/g);
 				$preContent		= $splitter[1];
 				$preElement		= $splitter[2];
 				$postContent	= $splitter[3];
 
-				preRender		= document.createElement("div");
-				preRender.id	= "preRender";
-				preAttach		= document.getElementById(mainArea);
-				preAttach.appendChild(preRender);
+				$main.doPreRender(mainArea);
 
 				//remove extra breaks
 				$preElement = $preElement.replace(/<br>/g, "");
@@ -452,8 +434,137 @@ if (jQuery) {
 				return $ret;
 			},
 
+			previewQuote: function (mainArea, $preVal, $main, uppercase) {
+				var $splitter, $preContent, $preElement, $postContent, $ret;
+				if (uppercase) {
+					$splitter		= $preVal.split(/(.*)\[QUOTE\](.*)\[\/QUOTE\](.*)/g);
+				} else {
+					$splitter		= $preVal.split(/(.*)\[quote\](.*)\[\/quote\](.*)/g);
+				}
+
+				$preContent		= $splitter[1];
+				$preElement		= $splitter[2];
+				$postContent	= $splitter[3];
+
+				$main.doPreRender(mainArea);
+
+				$("#preRender").html($preContent + "<blockquote>" + $preElement + "</blockquote>" + $postContent);
+				$ret = $("#preRender").html();
+				$("#preRender").remove();
+
+				if ($ret.match(/\[quote\](.*)\[\/quote\]/g)) { $ret = $main.previewQuote(previewID, $ret, $main, false); }
+				if ($ret.match(/\[QUOTE\](.*)\[\/QUOTE\]/g)) { $ret = $main.previewQuote(previewID, $ret, $main, true); }
+
+				return $ret;
+			},
+
+			previewTable: function (mainArea, $preVal, $main, uppercase) {
+				var $splitter, $preContent, $preElement, $postContent, $ret;
+				if (uppercase) {
+					$splitter 	= $preVal.split(/(.*)\[TABLE\](.*)\[\/TABLE\](.*)/g);
+				} else {
+					$splitter 	= $preVal.split(/(.*)\[table\](.*)\[\/table\](.*)/g);
+				}
+				$preContent		= $splitter[1];
+				$preElement		= $splitter[2];
+				$postContent	= $splitter[3];
+
+				$main.doPreRender(mainArea);
+
+				//table row
+				if ($preElement.match(/\[tr\](.*)\[\/tr\]/g)) { $preElement = $main.previewTableRow(mainArea, $preElement, $main, false); }
+				if ($preElement.match(/\[TR\](.*)\[\/TR\]/g)) { $preElement = $main.previewTableRow(mainArea, $preElement, $main, true); }
+
+				//table head
+				if ($preElement.match(/\[th\](.*)\[\/th\]/g)) { $preElement = $main.previewTableHead(mainArea, $preElement, $main, false); }
+				if ($preElement.match(/\[TH\](.*)\[\/TH\]/g)) { $preElement = $main.previewTableHead(mainArea, $preElement, $main, true); }
+
+				//table cell
+				if ($preElement.match(/\[td\](.*)\[\/td\]/g)) { $preElement = $main.previewTableCell(mainArea, $preElement, $main, false); }
+				if ($preElement.match(/\[TD\](.*)\[\/TD\]/g)) { $preElement = $main.previewTableCell(mainArea, $preElement, $main, true); }
+
+				$("#preRender").html($preContent + "<table>" + $preElement + "</table>" + $postContent);
+				$ret = $("#preRender").html();
+				$("#preRender").remove();
+
+				//loop to do extra ones
+				if ($ret.match(/\[table\](.*)\[\/table\]/g) { $ret = $main.previewTable(mainArea, $ret, $main, false); }
+				if ($ret.match(/\[TABLE\](.*)\[\/TABLE\]/g) { $ret = $main.previewTable(mainArea, $ret, $main, true); }
+
+				return $ret;
+			},
+			previewTableRow: function (mainArea, $preVal, $main, uppercase) {
+				var $splitter, $preContent, $preElement, $postContent, $ret;
+				if (uppercase) {
+					$splitter	= $preVal.split(/(.*)\[TR\](.*)\[\/TR\](.*)/g
+				} else {
+					$splitter	= $preVal.split(/(.*)\[tr\](.*)\[\/tr\](.*)/g
+				}
+				$preContent		= $splitter[1];
+				$preElement		= $splitter[2];
+				$postContent	= $splitter[3];
+
+				$main.doPreRender(mainArea);
+				$preElement = $preElement.replace(/<br>/g, "");
+
+				$("#preRender").html($preContent + "<tr>" + $preElement + "</tr>" + $postContent);
+				$ret = $("#preRender").html();
+				$("#preRender").remove();
+
+				if ($ret.match(/\[tr\](.*)\[\/tr\]/g)) { $ret = $main.previewTableRow(mainArea, $ret, $main, false); }
+				if ($ret.match(/\[TR\](.*)\[\/TR\]/g)) { $ret = $main.previewTableRow(mainArea, $ret, $main, true); }
+
+				return $ret;
+			},
+			previewTableHead: function (mainArea, $preVal, $main, uppercase) {
+				var $splitter, $preContent, $preElement, $postContent, $ret;
+				if (uppercase) {
+					$splitter	= $preVal.split(/(.*)\[TH\](.*)\[\/TH\](.*)/g);
+				} else {
+					$splitter	= $preVal.split(/(.*)\[th\](.*)\[\/th\](.*)/g);
+				}
+				$preContent		= $splitter[1];
+				$preElement		= $splitter[2];
+				$postContent	= $splitter[3];
+
+				$main.doPreRender(mainArea);
+				$preElement	= $preElement.replace(/<br>/g, "");
+
+				$("#preRender").html($preContent + "<th>" + $preElement + "</th>" + $postContent);
+				$ret = $("#preRender").html();
+				$("#preRender").remove();
+
+				if ($ret.match(/\[th\](.*)\[\/th\]/g)) { $ret = $main.previewTableHead(mainArea, $ret, $main, false); }
+				if ($ret.match(/\[TH\](.*)\[\/TH\]/g)) { $ret = $main.previewTableHead(mainArea, $ret, $main, true); }
+
+				return $ret;
+			},
+			previewTableCell: function (mainArea, $preVal, $main, uppercase) {
+				var $splitter, $preContent, $preElement, $postContent, $ret;
+				if (uppercase) {
+					$splitter	= $preVal.split(/(.*)\[TD\](.*)\[\/TD\](.*)/g);
+				} else {
+					$splitter	= $preVal.split(/(.*)\[td\](.*)\[\/td\](.*)/g);
+				}
+				$preContent		= $splitter[1];
+				$preElement		= $splitter[2];
+				$postContent	= $splitter[3];
+
+				$main.doPreRender();
+				$preElement	= $preElement.replace(/<br>/g, "");
+
+				$("#preRender").html($preContent + "<td>" + $preElement + "</td>" + $postContent);
+				$ret = $("#preRender").html();
+				$("#preRender").remove();
+
+				if ($ret.match(/\[td\](.*)\[\/td\]/g)) { $ret = $main.previewTableCell(mainArea, $ret, $main, false); }
+				if ($ret.match(/\[TD\](.*)\[\/TD\]/g)) { $ret = $main.previewTableCell(mainArea, $ret, $main, true); }
+
+				return $ret;
+			},
+
 			updatePreview: function (mainID, $main) {
-				var $content, $preVal, $preview, $preElement1, $preElement2, $preElement3;
+				var $content, $preVal, $preview, $preElement1, $preElement2, $preElement3, $previewID;
 				$content		= $("#" + mainID);
 				$preVal			= $content.val();
 				$preview		= $("#preview_" + mainID);
@@ -462,6 +573,7 @@ if (jQuery) {
 				$preElement1	= false;
 				$preElement2	= false;
 				$preElement3	= false;
+				$previewID		= "preview_" + mainID;
 
 				//if there is actually content
 				if ($preVal) {
@@ -473,34 +585,42 @@ if (jQuery) {
 					$preVal		= $preVal.replace(/\[hr\]\[\/hr\]/g, "<hr>");
 
 					//list replacement
-					if ($preVal.match(/\[list\](.*)\[\/list\]/g)) { $preVal = $main.previewList("preview_" + mainID, $preVal, $main); }
+					if ($preVal.match(/\[list\](.*)\[\/list\]/g)) { $preVal = $main.previewList(previewID, $preVal, $main); }
 
 					//bold replace
-					if ($preVal.match(/\[b\](.*)\[\/b\]/g)) { $preVal = $main.previewBold("preview_" + mainID, $preVal, $main); }
+					if ($preVal.match(/\[b\](.*)\[\/b\]/g)) { $preVal = $main.previewBold(previewID, $preVal, $main); }
 
 					//replace italics
-					if ($preVal.match(/\[i\](.*)\[\/i\]/g)) { $preVal = $main.previewItalic("preview_" + mainID, $preVal, $main); }
+					if ($preVal.match(/\[i\](.*)\[\/i\]/g)) { $preVal = $main.previewItalic(previewID, $preVal, $main); }
 
 					//replace underline
-					if ($preVal.match(/\[u\](.*)\[\/u\]/g)) { $preVal = $main.previewUnderline("preview_" + mainID, $preVal, $main); }
+					if ($preVal.match(/\[u\](.*)\[\/u\]/g)) { $preVal = $main.previewUnderline(previewID, $preVal, $main); }
 
 					//replace headers
-					if ($preVal.match(/\[h([0-9]+)\](.*)\[\/h([0-9]+)\]/g)) { $preVal = $main.previewHeader("preview_" + mainID, $preVal, $main); }
+					if ($preVal.match(/\[h([0-9]+)\](.*)\[\/h([0-9]+)\]/g)) { $preVal = $main.previewHeader(previewID, $preVal, $main); }
 
 					//replace youtube
-					if ($preVal.match(/\[youtube\]([a-zA-Z0-9]+)\[\/youtube\]/g)) { $preVal = $main.previewYouTube("preview_" + mainID, $preVal, $main); }
+					if ($preVal.match(/\[youtube\]([a-zA-Z0-9]+)\[\/youtube\]/g)) { $preVal = $main.previewYouTube(previewID, $preVal, $main); }
 
 					//image replace
-					if ($preVal.match(/\[img=(.*)\](.*)\[\/img\]/g)) { $preVal = $main.previewImage("preview_" + mainID, $preVal, $main, false); }
-					if ($preVal.match(/\[img\](.*)\[\/img\]/g)) { $preVal = $main.previewImage("preview_" + mainID, $preVal, $main, true); }
+					if ($preVal.match(/\[img=(.*)\](.*)\[\/img\]/g)) { $preVal = $main.previewImage(previewID, $preVal, $main, false); }
+					if ($preVal.match(/\[img\](.*)\[\/img\]/g)) { $preVal = $main.previewImage(previewID, $preVal, $main, true); }
 
 					//link replace
-					if ($preVal.match(/\[url=("(.*)")\](.*)\[\/url\]/g)) { $preVal = $main.previewLink("preview_" + mainID, $preVal, $main, true); }
-					if ($preVal.match(/\[url=(.*)\](.*)\[\/url\]/g)) { $preVal = $main.previewLink("preview_" + mainID, $preVal, $main, false); }
+					if ($preVal.match(/\[url=("(.*)")\](.*)\[\/url\]/g)) { $preVal = $main.previewLink(previewID, $preVal, $main, true); }
+					if ($preVal.match(/\[url=(.*)\](.*)\[\/url\]/g)) { $preVal = $main.previewLink(previewID, $preVal, $main, false); }
 
 					//color replace
-					if ($preVal.match(/\[COLOR=("([a-zA-Z0-9\#]+)")\](.*)\[\/COLOR\]/g)) { $preVal = $main.previewColor("preview_" + mainID, $preVal, $main, true); }
-					if ($preVal.match(/\[color=([a-zA-Z0-9\#]+)\](.*)\[\/color\]/g)) { $preVal = $main.previewColor("preview_" + mainID, $preVal, $main, false); }
+					if ($preVal.match(/\[COLOR=("([a-zA-Z0-9\#]+)")\](.*)\[\/COLOR\]/g)) { $preVal = $main.previewColor(previewID, $preVal, $main, true); }
+					if ($preVal.match(/\[color=([a-zA-Z0-9\#]+)\](.*)\[\/color\]/g)) { $preVal = $main.previewColor(previewID, $preVal, $main, false); }
+
+					//quote replace
+					if ($preVal.match(/\[quote\](.*)\[\/quote\]/g)) { $preVal = $main.previewQuote(previewID, $preVal, $main, false); }
+					if ($preVal.match(/\[QUOTE\](.*)\[\/QUOTE\]/g)) { $preVal = $main.previewQuote(previewID, $preVal, $main, true); }
+
+					//table replace
+					if ($preVal.match(/[table\](.*)\[\/table\]/g)) { $preVal = $main.previewTable(previewID, $preVal, $main, false); }
+					if ($preVal.match(/[TABLE\](.*)\[\/TABLE\]/g)) { $preVal = $main.previewTable(previewID, $preVal, $main, true); }
 
 					//actually insert the new content
 					$preview = $("#preview_" + mainID);
