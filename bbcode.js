@@ -470,7 +470,7 @@ if (jQuery) {
 					$preVal		= $preVal.replace(/\[hr\]\[\/hr\]/g, "<hr>");
 
 					//list replacement
-					if ($preVal.match(/\[list\]<br>(.*)\[\/list\]/g)) { $main.previewList("preview_" + mainID, $preVal, $main); }
+					if ($preVal.match(/\[list\](.*)\[\/list\]/g)) { $main.previewList("preview_" + mainID, $preVal, $main); }
 
 					//bold replace
 					if ($preVal.match(/\[b\](.*)\[\/b\]/g)) { $preVal = $main.previewBold("preview_" + mainID, $preVal, $main); }
