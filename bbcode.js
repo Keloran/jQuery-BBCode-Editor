@@ -403,9 +403,11 @@ if (jQuery) {
 			$postContent	= $splitter[3];
 
 			//replace breaks within the lement
-			$preElement		= $preElement.replace(/<br>/g, "\n");
+			console.log($preElement);
+			$preElement		= $preElement.replace(/<br>/g, "--beep--");
+			console.log($preElement);
 
-			if ($preElement.match(/\[\*\](.*)/g)) { $preElement = $.fn.bbCode.previewListItem(mainArea, $preElement, $main); }
+			if ($preElement.match(/\[\*\](.*)--beep--/g)) { $preElement = $.fn.bbCode.previewListItem(mainArea, $preElement, $main); }
 
 			randNum			= $.fn.bbCode.doPreRender(mainArea);
 
