@@ -16,7 +16,7 @@ if (jQuery) {
 
 			$main		= $(this);
 			$bbCodeID	= "#" + $(this).attr("id") + "bbCode";
-			if (!$($bbCodeID).attr("id")) { $main.makeContainer($(this).attr("id"), $backOptions); }
+			if (!$($bbCodeID).attr("id")) { $.fn.bbCode.makeContainer($(this).attr("id"), $backOptions); }
 
 			$mainID		= $(this).attr("id");
 			$mainObj	= document.getElementById($mainID);
