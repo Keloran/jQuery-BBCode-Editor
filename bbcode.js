@@ -404,7 +404,7 @@ if (jQuery) {
 
 			//replace breaks within the lement
 			console.log($preElement);
-			$preElement		= $preElement.replace(/(\-\-list\-item\-\-\[\*\])\/, "");
+			$preElement		= $preElement.replace(/(\-\-list\-item\-\-\[\*\])/, "");
 			console.log($preElement);
 			$preElement		= $preElement.replace(/<br>/g, "--list-item--");
 			console.log($preElement);
