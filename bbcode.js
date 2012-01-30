@@ -37,7 +37,7 @@ if (jQuery) {
 			$("#" + $mainID).keyup(function () { $.fn.bbCode.triggerChange($main, $mainID, settings.preview); });
 		};
 
-		$.fn.bbCode.makeContainer: function (mainID, $backOptions) {
+		$.fn.bbCode.makeContainer = function (mainID, $backOptions) {
 			var $textArea, $label, $title, $place, $container;
 			$textArea	= $("#" + mainID);
 			$label		= $("#label" + mainID);
@@ -55,7 +55,7 @@ if (jQuery) {
 			$("#" + mainID).bbCode($backOptions);
 		};
 
-		$.fn.bbCode.makeButtons: function ($mainID, $main, $bbCode, settings) {
+		$.fn.bbCode.makeButtons= function ($mainID, $main, $bbCode, settings) {
 			var $ret, singleLine, $bbCodeID, $parentID;
 
 			//if singleline
@@ -173,13 +173,13 @@ if (jQuery) {
 			});
 		},
 
-		$.fn.bbCode.triggerChange: function ($main, mainID, preview) {
+		$.fn.bbCode.triggerChange= function ($main, mainID, preview) {
 			$main.fixReplication(mainID);
 
 			if (preview) { $main.updatePreview(mainID, $main); }
 		};
 
-		$.fn.bbCode.fixSize: function () {
+		$.fn.bbCode.fixSize= function () {
 			//size the buttons that are left
 			$("button").css({
 				width: "16px",
@@ -188,7 +188,7 @@ if (jQuery) {
 			});
 		};
 
-		$.fn.bbCode.fixReplication: function (mainID) {
+		$.fn.bbCode.fixReplication= function (mainID) {
 			var $fixVal, $content;
 			$content	= $("#" + mainID);
 
@@ -204,7 +204,7 @@ if (jQuery) {
 			}
 		};
 
-		$.fn.bbCode.doPreRender: function (mainArea) {
+		$.fn.bbCode.doPreRender= function (mainArea) {
 			var preRender, preAttach, randNum;
 
 			randNum 		= Math.floor(Math.random() * 100);
@@ -216,7 +216,7 @@ if (jQuery) {
 			return randNum;
 		};
 
-		$.fn.bbCode.previewBold: function (mainArea, $preVal, $main) {
+		$.fn.bbCode.previewBold= function (mainArea, $preVal, $main) {
 			var $splitter, $preContent, $preElement, $postContent, $ret, randNum;
 			$splitter		= $preVal.split(/(.*)\[b\](.*)\[\/b\](.*)/g);
 			$preContent		= $splitter[1];
@@ -234,7 +234,7 @@ if (jQuery) {
 			return $ret;
 		};
 
-		$.fn.bbCode.previewItalic: function (mainArea, $preVal, $main) {
+		$.fn.bbCode.previewItalic= function (mainArea, $preVal, $main) {
 			var $splitter, $preContent, $preElement, $postContent, $ret, randNum;
 			$splitter		= $preVal.split(/(.*)\[i\](.*)\[\/i\](.*)/g);
 			$preContent		= $splitter[1];
@@ -252,7 +252,7 @@ if (jQuery) {
 			return $ret;
 		};
 
-		$.fn.bbCode.previewUnderline: function (mainArea, $preVal, $main) {
+		$.fn.bbCode.previewUnderline= function (mainArea, $preVal, $main) {
 			var $splitter, $preContent, $preElement, $postContent, $ret, randNum;
 			$splitter		= $preVal.split(/(.*)\[u\](.*)\[\/u\](.*)/g);
 			$preContent		= $splitter[1];
@@ -270,7 +270,7 @@ if (jQuery) {
 			return $ret;
 		};
 
-		$.fn.bbCode.previewHeader: function (mainArea, $preVal, $main) {
+		$.fn.bbCode.previewHeader= function (mainArea, $preVal, $main) {
 			var $splitter, $preContent, $preElement, $postContent, $ret, $hLevel, randNum;
 			$splitter		= $preVal.split(/(.*)\[h([0-9]+)\](.*)\[\/h([0-9]+)\](.*)/g);
 			$preContent		= $splitter[1];
@@ -289,7 +289,7 @@ if (jQuery) {
 			return $ret;
 		};
 
-		$.fn.bbCode.previewYouTube: function (mainArea, $preVal, $main) {
+		$.fn.bbCode.previewYouTube= function (mainArea, $preVal, $main) {
 			var $splitter, $preContent, $preElement, $postContent, $ret, randNum;
 			$splitter		= $preVal.split(/(.*)\[youtube\]([a-zA-Z0-9]+)\[\/youtube\](.*)/g);
 			$preContent		= $splitter[1];
@@ -307,7 +307,7 @@ if (jQuery) {
 			return $ret;
 		};
 
-		$.fn.bbCode.previewImage: function (mainArea, $preVal, $main, noCaption) {
+		$.fn.bbCode.previewImage= function (mainArea, $preVal, $main, noCaption) {
 			var $splitter, $preContent, $preElement, $postContent, $ret, $caption, $madeContent, randNum;
 			if (noCaption) {
 				$splitter	= $preVal.split(/(.*)\[img\](.*)\[\/img\](.*)/g);
@@ -341,7 +341,7 @@ if (jQuery) {
 			return $ret;
 		};
 
-		$.fn.bbCode.previewLink: function (mainArea, $preVal, $main, enclosed) {
+		$.fn.bbCode.previewLink= function (mainArea, $preVal, $main, enclosed) {
 			var $splitter, $preContent, $preElement, $postContent, $ret, $content, randNum;
 			if (enclosed) {
 				$splitter		= $preVal.split(/(.*)\[url=("(.*)")\](.*)\[\/url\](.*)/g);
@@ -368,7 +368,7 @@ if (jQuery) {
 			return $ret;
 		};
 
-		$.fn.bbCode.previewColor: function (mainArea, $preVal, $main, enclosed) {
+		$.fn.bbCode.previewColor= function (mainArea, $preVal, $main, enclosed) {
 			var $splitter, $preContent, $preElement, $postContent, $ret, $content, randNum;
 			if (enclosed) {
 				$splitter		= $preVal.split(/(.*)\[COLOR=("([a-zA-Z0-9\#]+)")\](.*)\[\/COLOR\](.*)/g);
@@ -395,7 +395,7 @@ if (jQuery) {
 			return $ret;
 		};
 
-		$.fn.bbCode.previewList: function (mainArea, $preVal, $main) {
+		$.fn.bbCode.previewList= function (mainArea, $preVal, $main) {
 			var $splitter, $preContent, $preElement, $postContent, $ret, randNum;
 			$splitter		= $preVal.split(/(.*)\[list\](.*)\[\/list\](.*)/g);
 			$preContent		= $splitter[1];
@@ -414,7 +414,7 @@ if (jQuery) {
 
 			return $ret;
 		};
-		$.fn.bbCode.previewListItem: function (mainArea, $preVal, $main) {
+		$.fn.bbCode.previewListItem= function (mainArea, $preVal, $main) {
 			var $splitter, $preContent, $preElement, $postContent, $ret, randNum;
 			$splitter		= $preVal.split(/(.*)\[\*\](.*)<br>(.*)/g);
 			$preContent		= $splitter[1];
@@ -436,7 +436,7 @@ if (jQuery) {
 			return $ret;
 		};
 
-		$.fn.bbCode.previewQuote: function (mainArea, $preVal, $main, uppercase) {
+		$.fn.bbCode.previewQuote= function (mainArea, $preVal, $main, uppercase) {
 			var $splitter, $preContent, $preElement, $postContent, $ret, randNum;
 			if (uppercase) {
 				$splitter		= $preVal.split(/(.*)\[QUOTE\](.*)\[\/QUOTE\](.*)/g);
@@ -460,7 +460,7 @@ if (jQuery) {
 			return $ret;
 		};
 
-		$.fn.bbCode.previewTable: function (mainArea, $preVal, $main, uppercase) {
+		$.fn.bbCode.previewTable= function (mainArea, $preVal, $main, uppercase) {
 			var $splitter, $preContent, $preElement, $postContent, $ret, randNum;
 			if (uppercase) {
 				$splitter 	= $preVal.split(/(.*)\[TABLE\](.*)\[\/TABLE\](.*)/g);
@@ -495,7 +495,7 @@ if (jQuery) {
 
 			return $ret;
 		};
-		$.fn.bbCode.previewTableRow: function (mainArea, $preVal, $main, uppercase) {
+		$.fn.bbCode.previewTableRow= function (mainArea, $preVal, $main, uppercase) {
 			var $splitter, $preContent, $preElement, $postContent, $ret, randNum;
 			if (uppercase) {
 				$splitter	= $preVal.split(/(.*)\[TR\](.*)\[\/TR\](.*)/g);
@@ -518,7 +518,7 @@ if (jQuery) {
 
 			return $ret;
 		};
-		$.fn.bbCode.previewTableHead: function (mainArea, $preVal, $main, uppercase) {
+		$.fn.bbCode.previewTableHead= function (mainArea, $preVal, $main, uppercase) {
 			var $splitter, $preContent, $preElement, $postContent, $ret, randNum;
 			if (uppercase) {
 				$splitter	= $preVal.split(/(.*)\[TH\](.*)\[\/TH\](.*)/g);
@@ -541,7 +541,7 @@ if (jQuery) {
 
 			return $ret;
 		};
-		$.fn.bbCode.previewTableCell: function (mainArea, $preVal, $main, uppercase) {
+		$.fn.bbCode.previewTableCell= function (mainArea, $preVal, $main, uppercase) {
 			var $splitter, $preContent, $preElement, $postContent, $ret, randNum;
 			if (uppercase) {
 				$splitter	= $preVal.split(/(.*)\[TD\](.*)\[\/TD\](.*)/g);
@@ -565,7 +565,7 @@ if (jQuery) {
 			return $ret;
 		};
 
-		$.fn.bbCode.updatePreview: function (mainID, $main) {
+		$.fn.bbCode.updatePreview= function (mainID, $main) {
 			var $content, $preVal, $preview, $preElement1, $preElement2, $preElement3, previewID;
 			$content		= $("#" + mainID);
 			$preVal			= $content.val();
@@ -630,7 +630,7 @@ if (jQuery) {
 			}
 		};
 
-		$.fn.bbCode.makePreview: function (mainID) {
+		$.fn.bbCode.makePreview= function (mainID) {
 			$("#bbContainer_" + mainID).append("<div id=\"preview_" + mainID + "\"></div>");
 			$preview = $("#preview_" + mainID);
 			$preview.css({
@@ -642,7 +642,7 @@ if (jQuery) {
 			$("#" + mainID).css("width", "44%");
 		};
 
-		$.fn.bbCode.doTag: function (tag, tag2, mainID) {
+		$.fn.bbCode.doTag= function (tag, tag2, mainID) {
 			var $len, $sel, $start, $end, $rep, $tag1Len, $tag2Len, $currSend
 			var $tag1	= "[" + tag + "]";
 			var $tag2	= "[/" + tag2 + "]";
@@ -673,7 +673,7 @@ if (jQuery) {
 			}
 		};
 
-		$.fn.bbCode.doList: function (mainID) {
+		$.fn.bbCode.doList= function (mainID) {
 			var $mainLen;
 			$listItems	= new Array();
 			$listNum	= 0;
@@ -703,7 +703,7 @@ if (jQuery) {
 			}
 		};
 
-		$.fn.bbCode.doMiddle: function (tag, content, mainID) {
+		$.fn.bbCode.doMiddle= function (tag, content, mainID) {
 			if (content) {
 				$mainObj	= document.getElementById(mainID);
 
@@ -720,7 +720,7 @@ if (jQuery) {
 			}
 		};
 
-		$.fn.bbCode.doItems: function () {
+		$.fn.bbCode.doItems= function () {
 			var $item = null;
 			$item = prompt("List Item, [cancel to stop]");
 
