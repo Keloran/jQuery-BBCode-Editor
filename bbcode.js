@@ -5,7 +5,7 @@ if (jQuery) {
 	//}
 
 	(function ($) {
-		$.fn.extend({
+		var methods = {
 			bbCode: function (options) {
 				var $bbCodeID, $mainID, $backOptions, $mainObj, $main, settings, $bbCode;
 				$backOptions = options;
@@ -58,7 +58,7 @@ if (jQuery) {
 
 			makeButtons: function ($mainID, $main, $bbCode, settings) {
 				var $ret, singleLine, $bbCodeID, $parentID;
-				
+
 				//if singleline
 				if (settings.singleLine) { singleLine = true; }
 
@@ -163,13 +163,13 @@ if (jQuery) {
 					$main.doTag("h6", "h6", $mainID);
 					$main.triggerChange($main, $mainID, settings.preview);
 				});
-				
+
 				//remove extras that sometimes happen
 				$bbCodeID = $bbCode.attr("id");
-				$(".bbCodeButton").each(function (i) { 
+				$(".bbCodeButton").each(function (i) {
 					$parentID = $(this).parent().attr("id");
 					if ($bbCodeID == $parentID) {
-						$(this).not(".ui-button").unbind().remove(); 
+						$(this).not(".ui-button").unbind().remove();
 					}
 				});
 			},
@@ -179,7 +179,7 @@ if (jQuery) {
 
 				if (preview) { $main.updatePreview(mainID, $main); }
 			},
-			
+
 			fixSize: function () {
 				//size the buttons that are left
 				$("button").css({
@@ -731,7 +731,17 @@ if (jQuery) {
 					$main.doItems();
 				}
 			}
-		});
+		};
+
+		$.fn.bbCode = function(method) {
+			if (methods[method]) {
+				return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+			} else if (typeof method === 'object' || !method) {
+				return methods.bbCode.apply(this, arguments);
+			} else {
+				$.error('Method ' + method + ' does not exist in jQuery.bbCode');
+			}
+		};
 	})(jQuery);
 }
 
