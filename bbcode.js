@@ -56,12 +56,21 @@ if (jQuery) {
 		};
 
 		$.fn.bbCode.triggerButton = function (button, $mainID, $main, $preview) {
-			if (button.keyCode == 2) {
-				$.fn.bbCode.doTag("b", "b", $mainID);
-				$.fn.bbCode.triggerChange($main, $mainID, $preview);
-			} else {
-				console.log(button, button.keyCode);
+			switch(button.keyCode) {
+				case 2:
+					$.fn.bbCode.doTag("b", "b", $mainID);
+					break;
+
+				case 9:
+					$.fn.bbCode.doTag("i", "i", $mainID);
+					break;
+
+				case 21:
+					$.fn.bbCode.doTag("u", "u", $mainID);
+					break;
 			}
+
+			$.fn.bbCode.triggerChange($main, $mainID, $preview);
 		};
 
 		$.fn.bbCode.makeButtons = function ($mainID, $main, $bbCode, settings) {
