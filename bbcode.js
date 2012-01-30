@@ -431,7 +431,7 @@ if (jQuery) {
 			$ret	= $("#preRender" + randNum).html();
 			$("#preRender" + randNum).remove();
 
-			if ($ret.match(/\[\*\](.*)<br>/g)) { $ret = $.fn.bbCode.previewListItem(mainArea, $ret, $main); }
+			if ($ret.match(/\[\*\](.*)/g)) { $ret = $.fn.bbCode.previewListItem(mainArea, $ret, $main); }
 
 			return $ret;
 		};
@@ -702,6 +702,16 @@ if (jQuery) {
 				$mainObj.selectionEnd	= $mainLen;
 			}
 		};
+		$.fn.bbCode.doItems = function () {
+			var $item = null;
+			$item = prompt("List Item, [cancel to stop]");
+
+			if ($item) {
+				$listItems[$listNum] = $item;
+				$listNum++;
+				$.fn.bbCode.doItems();
+			}
+		};
 
 		$.fn.bbCode.doMiddle = function (tag, content, mainID) {
 			if (content) {
@@ -717,17 +727,6 @@ if (jQuery) {
 				$mainObj.focus();
 
 				return false;
-			}
-		};
-
-		$.fn.bbCode.doItems = function () {
-			var $item = null;
-			$item = prompt("List Item, [cancel to stop]");
-
-			if ($item) {
-				$listItems[$listNum] = $item;
-				$listNum++;
-				$.fn.bbCode.doItems();
 			}
 		};
 	})(jQuery);
