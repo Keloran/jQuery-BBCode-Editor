@@ -404,10 +404,12 @@ if (jQuery) {
 
 			//replace breaks within the lement
 			console.log($preElement);
-			$preElement		= $preElement.replace(/<br>/g, "--beep--");
+			$preElement		= $preElement.replace(/(\-\-list\-item\-\-\[\*\])\/, "");
+			console.log($preElement);
+			$preElement		= $preElement.replace(/<br>/g, "--list-item--");
 			console.log($preElement);
 
-			if ($preElement.match(/\[\*\](.*)--beep--/g)) { $preElement = $.fn.bbCode.previewListItem(mainArea, $preElement, $main); }
+			if ($preElement.match(/\[\*\](.*)--list-item--/g)) { $preElement = $.fn.bbCode.previewListItem(mainArea, $preElement, $main); }
 
 			randNum			= $.fn.bbCode.doPreRender(mainArea);
 
@@ -431,17 +433,11 @@ if (jQuery) {
 
 			randNum			= $.fn.bbCode.doPreRender(mainArea);
 
-			//remove extra breaks
-			$preElement = $preElement.replace(/<br>/g, "");
-			$preContent = $preContent.replace(/<br>/g, "");
-
 			$("#preRender" + randNum).html($preContent + "<li>" + $preElement + "</li>" + $postContent);
 			$ret	= $("#preRender" + randNum).html();
 			$("#preRender" + randNum).remove();
 
-			if ($ret.match(/\[\*\](.*)\n/g)) { $ret = $.fn.bbCode.previewListItem(mainArea, $ret, $main); }
-			if ($ret.match(/\[\*\](.*)/g)) { $ret = $.fn.bbCode.previewListItem(mainArea, $ret, $main); }
-			if ($ret.match(/\[\*\](.*)<br>/g)) { $ret = $.fn.bbCode.previewListItem(mainArea, $ret, $main); }
+			if ($ret.match(/\[\*\](.*)--list-item--/g)) { $ret = $.fn.bbCode.previewListItem(mainArea, $ret, $main); }
 
 			return $ret;
 		};
