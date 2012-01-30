@@ -68,7 +68,7 @@ if (jQuery) {
 			var $ret, singleLine, $bbCodeID, $parentID;
 
 			//key binds
-			$("#" + $mainID).bind('keypress', function(e) { $fn.bbCode.triggerButton(e, $mainID, $main, settings.preview); });
+			$("#" + $mainID).bind('keypress', function(e) { $.fn.bbCode.triggerButton(e, $mainID, $main, settings.preview); });
 
 			//if singleline
 			if (settings.singleLine) { singleLine = true; }
