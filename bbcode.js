@@ -420,12 +420,13 @@ if (jQuery) {
 		};
 		$.fn.bbCode.previewListItem = function (mainArea, $preVal, $main) {
 			var $splitter, $preContent, $preElement, $postContent, $ret, randNum;
-			$splitter		= $preVal.split(/(.*)\[\*\]((.*)\-\-list\-item\-\-)(.*)/g);
+			$splitter		= $preVal.split(/(.*)\[\*\](.*)(\-\-list\-item\-\-)(.*)/g);
 			console.log($splitter);
 
 			$preContent		= $splitter[1];
 			$preElement		= $splitter[2];
-			$postContent	= $splitter[3];
+			$removeDelimit	= $splitter[3];
+			$postContent	= $splitter[4];
 
 			randNum			= $.fn.bbCode.doPreRender(mainArea);
 
@@ -433,7 +434,7 @@ if (jQuery) {
 			$ret	= $("#preRender" + randNum).html();
 			$("#preRender" + randNum).remove();
 
-			if ($ret.match(/\[\*\](.*)--list-item--/g)) { $ret = $.fn.bbCode.previewListItem(mainArea, $ret, $main); }
+			if ($ret.match(/\[\*\]((.*)\-\-list\-item\-\-)/g)) { $ret = $.fn.bbCode.previewListItem(mainArea, $ret, $main); }
 
 			return $ret;
 		};
