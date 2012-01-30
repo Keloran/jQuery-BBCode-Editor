@@ -406,6 +406,7 @@ if (jQuery) {
 			console.log($preElement);
 			$preElement		= $preElement.replace(/(\-\-list\-item\-\-\[\*\])/, "");
 			console.log($preElement);
+			console.log("derp");
 			$preElement		= $preElement.replace(/<br>/g, "--list-item--");
 			console.log($preElement);
 
