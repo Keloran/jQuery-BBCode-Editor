@@ -417,6 +417,8 @@ if (jQuery) {
 		$.fn.bbCode.previewListItem = function (mainArea, $preVal, $main) {
 			var $splitter, $preContent, $preElement, $postContent, $ret, randNum;
 			$splitter		= $preVal.split(/(.*)\[\*\](.*)<br>(.*)/g);
+			if (!$splitter) { $splitter	= $preVal.split(/(.*)\[\*\](.*)(.*)/g); }
+
 			$preContent		= $splitter[1];
 			$preElement		= $splitter[2];
 			$postContent	= $splitter[3];
