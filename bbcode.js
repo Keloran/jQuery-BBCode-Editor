@@ -58,6 +58,11 @@ if (jQuery) {
 		$.fn.bbCode.makeButtons = function ($mainID, $main, $bbCode, settings) {
 			var $ret, singleLine, $bbCodeID, $parentID;
 
+			//debug
+			$("#" + $mainID).bind('keypress', function(e) {
+				console.log(e.keyCode);
+			});
+
 			//if singleline
 			if (settings.singleLine) { singleLine = true; }
 
