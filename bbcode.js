@@ -406,7 +406,7 @@ if (jQuery) {
 			console.log($preElement);
 			$preElement		= $preElement.replace(/<br>/g, "--list-item--");
 			console.log($preElement);
-			$preElement		= $preElement.replace(/(\-\-list\-item\-\-\[\*\])/, "");
+			$preElement		= $preElement.replace(/(\-\-list\-item\-\-\[\*\])/, "[*]");
 			console.log($preElement);
 
 			if ($preElement.match(/\[\*\](.*)--list-item--/g)) { $preElement = $.fn.bbCode.previewListItem(mainArea, $preElement, $main); }
