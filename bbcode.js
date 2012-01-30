@@ -402,14 +402,11 @@ if (jQuery) {
 			$preElement		= $splitter[2];
 			$postContent	= $splitter[3];
 
-			//replace breaks within the lement
-			console.log($preElement);
+			//replace breaks within the element
 			$preElement		= $preElement.replace(/<br>/g, "--list-item--");
-			console.log($preElement);
 			$preElement		= $preElement.replace(/(\-\-list\-item\-\-\[\*\])/, "[*]");
-			console.log($preElement);
 
-			if ($preElement.match(/\[\*\](.*)--list-item--/g)) { $preElement = $.fn.bbCode.previewListItem(mainArea, $preElement, $main); }
+			if ($preElement.match(/\[\*\]((.*)\-\-list\-item\-\-)/g)) { $preElement = $.fn.bbCode.previewListItem(mainArea, $preElement, $main); }
 
 			randNum			= $.fn.bbCode.doPreRender(mainArea);
 
@@ -423,9 +420,8 @@ if (jQuery) {
 		};
 		$.fn.bbCode.previewListItem = function (mainArea, $preVal, $main) {
 			var $splitter, $preContent, $preElement, $postContent, $ret, randNum;
-			$splitter		= $preVal.split(/(.*)\[\*\](.*)<br>(.*)/g);
-			if (!$splitter) { $splitter	= $preVal.split(/(.*)\[\*\](.*)\n(.*)/g); }
-			if (!$splitter) { $splitter	= $preVal.split(/(.*)\[\*\](.*)/g); }
+			$splitter		= $preVal.split(/(.*)\[\*\]((.*)\-\-list\-item\-\-)(.*)/g);
+			console.log($splitter);
 
 			$preContent		= $splitter[1];
 			$preElement		= $splitter[2];
