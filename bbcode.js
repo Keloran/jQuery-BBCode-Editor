@@ -404,10 +404,9 @@ if (jQuery) {
 
 			//replace breaks within the lement
 			console.log($preElement);
-			$preElement		= $preElement.replace(/(\-\-list\-item\-\-\[\*\])/, "");
-			console.log($preElement);
-			console.log("derp");
 			$preElement		= $preElement.replace(/<br>/g, "--list-item--");
+			console.log($preElement);
+			$preElement		= $preElement.replace(/(\-\-list\-item\-\-\[\*\])/, "");
 			console.log($preElement);
 
 			if ($preElement.match(/\[\*\](.*)--list-item--/g)) { $preElement = $.fn.bbCode.previewListItem(mainArea, $preElement, $main); }
