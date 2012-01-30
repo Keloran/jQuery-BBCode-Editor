@@ -55,13 +55,20 @@ if (jQuery) {
 			$("#" + mainID).bbCode($backOptions);
 		};
 
+		$.fn.bbCode.triggerButton = function (button, $mainID, $main, $preview) {
+			if (button.keyCode == 2) {
+				$.fn.bbCode.doTag("b", "b", $mainID);
+				$.fn.bbCode.triggerChange($main, $mainID, $preview);
+			} else {
+				console.log(button, button.keyCode);
+			}
+		};
+
 		$.fn.bbCode.makeButtons = function ($mainID, $main, $bbCode, settings) {
 			var $ret, singleLine, $bbCodeID, $parentID;
 
-			//debug
-			$("#" + $mainID).bind('keypress', function(e) {
-				console.log(e.keyCode);
-			});
+			//key binds
+			$("#" + $mainID).bind('keypress', function(e) { $fn.bbCode.triggerButton(e, $mainID, $main, settings.preview); });
 
 			//if singleline
 			if (settings.singleLine) { singleLine = true; }
