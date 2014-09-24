@@ -53,6 +53,8 @@ when you type it will live grab the result and show you what it will look like</
 on the side will make <b>bold</b>
 this is done inside a live div, so you only see a #### bold #### version of the text</p>
 
+<textarea id="reply"></textarea>
+
 <h2>
 <a name="whats-not-provided" class="anchor" href="#whats-not-provided"><span class="octicon octicon-link"></span></a>Whats not provided</h2>
 
@@ -72,6 +74,15 @@ person likes things different, and it stops me falling foul of copyright issues<
     </div>
 
     
+
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="bbcode.js"></script>
+    <script>
+        $("#reply").bbCode({
+            preview:true
+        });
+    </script>
+
 
   </body>
 </html>
