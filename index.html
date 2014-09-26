@@ -2,11 +2,12 @@
 <html>
 
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Jquery-bbcode-editor : An on the fly bbcode editor">
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Jquery-bbcode-editor : An on the fly bbcode editor" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://code.jquery.com/ui/1.10.4/themes/cupertino/jquery-ui.css" />
 
     <title>Jquery-bbcode-editor</title>
   </head>
@@ -46,14 +47,19 @@ as used in Hammer Framework, so you can see whats actually going to display once
     preview: true
 });</pre>
 
-<p>this will update the textbox adding buttons, and a live preview on the side, 
+<p>this will update the textbox adding buttons, and a live preview on the side,
 when you type it will live grab the result and show you what it will look like</p>
-
-<textarea id="reply"></textarea>
 
 <p>e.g. <code>[b]bold[/b]</code>
 on the side will make <code><b>bold</b></code>
 this is done inside a live div, so you only see a <strong>bold</strong> version of the text</p>
+
+<p>
+  <label for="reply" id="labelreply">Example</label>
+  <textarea id="reply">
+
+  </textarea>
+</p>
 
 <h2>
 <a name="whats-not-provided" class="anchor" href="#whats-not-provided"><span class="octicon octicon-link"></span></a>Whats not provided</h2>
@@ -72,12 +78,15 @@ person likes things different, and it stops me falling foul of copyright issues.
         <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-    
-    <script src="bbcode.js"></script>
 
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"  type="text/javascript"></script>
+    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"  type="text/javascript"></script>
+    <script src="bbcode.js" type="text/javascript"></script>
     <script>
-      $("#reply").bbCode({
-          preview: true
+      $(function() {
+        $("#reply").bbCode({
+            preview:true
+        });
       });
     </script>
 
