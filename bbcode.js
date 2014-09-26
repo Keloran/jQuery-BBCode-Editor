@@ -11,7 +11,8 @@ if (jQuery) {
 
 			settings = $.extend({
 				"counter":	false,
-				"preview":	false
+				"preview":	false,
+				"noIcons":  false
 			}, options);
 
 			$main		= $(this);
@@ -83,29 +84,31 @@ if (jQuery) {
 			//if singleline
 			if (settings.singleLine) { singleLine = true; }
 
+			showText = settings.noIcons;
+
 			//bold
 			$bbCode.append("<span class=\"bbCodeButton sprite_text_bold\" id=\"bold" + $mainID + "\">Bold</span>");
-			$("#bold" + $mainID).button({text: false, icons: {primary: "boldBB"}}).click(function () {
+			$("#bold" + $mainID).button({text: showText, icons: {primary: "boldBB"}}).click(function () {
 				$.fn.bbCode.doTag("b", "b", $mainID);
 				$.fn.bbCode.triggerChange($main, $mainID, settings.preview);
 			});
 
 			//italic
 			$bbCode.append("<span class=\"bbCodeButton sprite_text_italic\" id=\"italic" + $mainID + "\">Italic</span>");
-			$("#italic" + $mainID).button({text: false, icons: {primary: "italicBB"}}).click(function () {
+			$("#italic" + $mainID).button({text: showText, icons: {primary: "italicBB"}}).click(function () {
 				$.fn.bbCode.doTag("i", "i", $mainID);
 				$.fn.bbCode.triggerChange($main, $mainID, settings.preview);
 			});
 
 			//underline
 			$bbCode.append("<span class=\"bbCodeButton sprite_text_underline\" id=\"underline" + $mainID + "\">Underline</span>");
-			$("#underline" + $mainID).button({text: false, icons: {primary: "underlineBB"}}).click(function () {
+			$("#underline" + $mainID).button({text: showText, icons: {primary: "underlineBB"}}).click(function () {
 				$.fn.bbCode.doTag("u", "u", $mainID);
 				$.fn.bbCode.triggerChange($main, $mainID, settings.preview);
 			});
 
 			$bbCode.append("<span class=\"bbCodeButton sprite_style\" id=\"colorBB" + $mainID + "\">Color</span>");
-			$("#colorBB" + $mainID).button({text: false, icons: {primary: "colorBB"}}).click(function () {
+			$("#colorBB" + $mainID).button({text: showText, icons: {primary: "colorBB"}}).click(function () {
 				$ret = prompt("Enter Color: ", "CECECE");
 				if ($ret) { $.fn.bbCode.doTag("color=#" + $ret, "color", $mainID); }
 				$.fn.bbCode.triggerChange($main, $mainID, settings.preview);
@@ -113,7 +116,7 @@ if (jQuery) {
 
 			//link
 			$bbCode.append("<span class=\"bbCodeButton sprite_link\" id=\"linkBB" + $mainID + "\">Link</span>");
-			$("#linkBB" + $mainID).button({text: false, icons: {primary: "linkBB"}}).click(function () {
+			$("#linkBB" + $mainID).button({text: showText, icons: {primary: "linkBB"}}).click(function () {
 				$ret = prompt("Enter URL:", "http://www.tester.com");
 				if ($ret) { $.fn.bbCode.doTag("url=" + $ret, "url", $mainID); }
 				$.fn.bbCode.triggerChange($main, $mainID, settings.preview);
@@ -121,7 +124,7 @@ if (jQuery) {
 
 			//image
 			$bbCode.append("<span class=\"bbCodeButton sprite_picture\" id=\"imageBB" + $mainID + "\">Image</span>");
-			$("#imageBB" + $mainID).button({text: false, icons: {primary: "imageBB"}}).click(function () {
+			$("#imageBB" + $mainID).button({text: showText, icons: {primary: "imageBB"}}).click(function () {
 				$ret = prompt("Enter Image URL:", "http://images.google.com");
 				if ($ret) {	$.fn.bbCode.doTag("img=" + $ret, "img", $mainID); }
 				$.fn.bbCode.triggerChange($main, $mainID, settings.preview);
@@ -129,7 +132,7 @@ if (jQuery) {
 
 			//youtube
 			$bbCode.append("<span class=\"bbCodeButton sprite_video\" id=\"videoBB" + $mainID + "\">Youtube</span>");
-			$("#videoBB" + $mainID).button({text: false, icons: {primary: "videoBB"}}).click(function () {
+			$("#videoBB" + $mainID).button({text: showText, icons: {primary: "videoBB"}}).click(function () {
 				$ret = prompt("Enter youtube ID:", "PkypXn5S4Rg");
 				$.fn.bbCode.doMiddle("youtube", $ret, $mainID);
 				$.fn.bbCode.triggerChange($main, $mainID, settings.preview);
@@ -137,7 +140,7 @@ if (jQuery) {
 
 			//List
 			$bbCode.append("<span class=\"bbCodeButton sprite_text_list_bullets\" id=\"listBB" + $mainID + "\">List</span>");
-			$("#listBB" + $mainID).button({text: false, icons: {primary: "listBB"}}).click(function () {
+			$("#listBB" + $mainID).button({text: showText, icons: {primary: "listBB"}}).click(function () {
 				$.fn.bbCode.doList($mainID);
 				$.fn.bbCode.triggerChange($main, $mainID, settings.preview);
 			});
@@ -147,7 +150,7 @@ if (jQuery) {
 
 			//hr
 			$bbCode.append("<span class=\"bbCodeButton sprite_text_horizontalrule\" id=\"hrBB" + $mainID + "\">HR</span>");
-			$("#hrBB" + $mainID).button({text: false, icons: {primary: "hrBB"}}).click(function () {
+			$("#hrBB" + $mainID).button({text: showText, icons: {primary: "hrBB"}}).click(function () {
 				$.fn.bbCode.doTag("hr", "hr", $mainID);
 				$.fn.bbCode.triggerChange($main, $mainID, settings.preview);
 			});
@@ -160,27 +163,27 @@ if (jQuery) {
 			$bbCode.append("<span class=\"bbCodeButton sprite_text_heading_5\" id=\"h5BB" + $mainID + "\">H5</span>");
 			$bbCode.append("<span class=\"bbCodeButton sprite_text_heading_6\" id=\"h6BB" + $mainID + "\">H6</span>");
 
-			$("#h1BB" + $mainID).button({text: false, icons: {primary: "h1BB"}}).click(function () {
+			$("#h1BB" + $mainID).button({text: showText, icons: {primary: "h1BB"}}).click(function () {
 				$.fn.bbCode.doTag("h1", "h1", $mainID);
 				$.fn.bbCode.triggerChange($main, $mainID, settings.preview);
 			});
-			$("#h2BB" + $mainID).button({text: false, icons: {primary: "h2BB"}}).click(function () {
+			$("#h2BB" + $mainID).button({text: showText, icons: {primary: "h2BB"}}).click(function () {
 				$.fn.bbCode.doTag("h2", "h2", $mainID);
 				$.fn.bbCode.triggerChange($main, $mainID, settings.preview);
 			});
-			$("#h3BB" + $mainID).button({text: false, icons: {primary: "h3BB"}}).click(function () {
+			$("#h3BB" + $mainID).button({text: showText, icons: {primary: "h3BB"}}).click(function () {
 				$.fn.bbCode.doTag("h3", "h3", $mainID);
 				$.fn.bbCode.triggerChange($main, $mainID, settings.preview);
 			});
-			$("#h4BB" + $mainID).button({text: false, icons: {primary: "h4BB"}}).click(function () {
+			$("#h4BB" + $mainID).button({text: showText, icons: {primary: "h4BB"}}).click(function () {
 				$.fn.bbCode.doTag("h4", "h4", $mainID);
 				$.fn.bbCode.triggerChange($main, $mainID, settings.preview);
 			});
-			$("#h5BB" + $mainID).button({text: false, icons: {primary: "h5BB"}}).click(function () {
+			$("#h5BB" + $mainID).button({text: showText, icons: {primary: "h5BB"}}).click(function () {
 				$.fn.bbCode.doTag("h5", "h5", $mainID);
 				$.fn.bbCode.triggerChange($main, $mainID, settings.preview);
 			});
-			$("#h6BB" + $mainID).button({text: false, icons: {primary: "h6BB"}}).click(function () {
+			$("#h6BB" + $mainID).button({text: showText, icons: {primary: "h6BB"}}).click(function () {
 				$.fn.bbCode.doTag("h6", "h6", $mainID);
 				$.fn.bbCode.triggerChange($main, $mainID, settings.preview);
 			});
@@ -756,11 +759,12 @@ if (jQuery) {
 	})(jQuery);
 }
 
-function textArea(obj, previewOn, counterOn) {
+function textArea(obj, previewOn, counterOn, noIconsOn) {
 	if (jQuery) {
 		$("#" + obj).bbCode({
 			preview: previewOn,
-			counter: counterOn
+			counter: counterOn,
+			noIcons: noIconsOn
 		});
 	}
 }
